@@ -42,21 +42,22 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
       </a>
     </div>
 
-    {/* 中：返回主站按鈕 — 768px 以上才出現（行動版用漢堡選單最上方的同連結） */}
+    {/* 中：返回主站按鈕 — 全裝置顯示（嵌入 Pro360 等平台時的明確返回路徑） */}
     <a
       href={SITE.mainSiteUrl}
-      class="hidden md:inline-flex items-center gap-2
-             px-4 py-2
-             text-[12px] tracking-[0.1em] font-semibold
-             text-[var(--color-ink)]
-             border border-[var(--color-rule-bold)] rounded-full
-             hover:bg-[var(--color-primary)] hover:text-[var(--color-paper)] hover:border-[var(--color-primary)]
+      class="inline-flex items-center gap-1.5 md:gap-2
+             px-3 py-1.5 md:px-4 md:py-2
+             text-[12px] md:text-[12px] tracking-[0.05em] md:tracking-[0.1em] font-semibold
+             text-[var(--color-paper)]
+             bg-[var(--color-primary)]
+             hover:bg-[var(--color-primary-deep)]
              active:scale-[0.97]
+             rounded-full whitespace-nowrap
              transition-all duration-300"
       title="返回 AI 智能大腦主站"
     >
       <span aria-hidden="true">←</span>
-      返回主站
+      <span>返回主站</span>
     </a>
 
     {/* 右：漢堡 (mobile only) + CTA */}
