@@ -15,18 +15,30 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
   aria-label="主選單"
 >
   <div class="container-wide h-full flex items-center justify-between gap-4">
-    {/* 左：品牌 — 編輯式 wordmark */}
-    <a
-      href={SITE.overviewUrl}
-      class="group flex items-center gap-1 whitespace-nowrap"
-      title="回到 12 篇系列總覽"
-    >
-      <span class="font-display-cjk font-black text-[1.0625rem] md:text-lg tracking-tight text-[var(--color-ink)]
-                   group-hover:text-[var(--color-primary)] transition-colors duration-300">
-        AI 智能大腦
-      </span>
-      <span class="text-[var(--color-primary)] text-lg font-black">.</span>
-    </a>
+    {/* 左：品牌 — 編輯式 wordmark，文章頁手機加回上箭頭 */}
+    <div class="flex items-center gap-1">
+      {articleNum && (
+        <a
+          href={SITE.overviewUrl}
+          class="md:hidden flex items-center justify-center w-8 h-8 -ml-1.5
+                 text-[1.1rem] leading-none
+                 text-[var(--color-ink-muted)] hover:text-[var(--color-primary)]
+                 transition-colors duration-300"
+          aria-label="返回系列總覽"
+        >←</a>
+      )}
+      <a
+        href={SITE.overviewUrl}
+        class="group flex items-center gap-1 whitespace-nowrap"
+        title="回到 12 篇系列總覽"
+      >
+        <span class="font-display-cjk font-black text-[1.0625rem] md:text-lg tracking-tight text-[var(--color-ink)]
+                     group-hover:text-[var(--color-primary)] transition-colors duration-300">
+          AI 智能大腦
+        </span>
+        <span class="text-[var(--color-primary)] text-lg font-black">.</span>
+      </a>
+    </div>
 
     {/* 中：系列 label — 中等斷點以上才出現 */}
     <a

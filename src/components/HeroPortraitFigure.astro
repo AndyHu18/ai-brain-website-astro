@@ -11,7 +11,7 @@ const sizes = {
 } as const;
 const s = sizes[variant];
 ---
-<figure class="andy-portrait relative max-lg:hidden self-end" aria-hidden="true">
+<figure class="andy-portrait relative self-end mx-auto lg:mx-0" aria-hidden="true">
   <div class="andy-portrait-glow absolute inset-[-15%] z-0 pointer-events-none"></div>
   <img
     src="/andy-photo.png"
@@ -47,5 +47,11 @@ const s = sizes[variant];
   }
   .andy-portrait:hover .andy-portrait-img {
     transform: scale(1.012);
+  }
+  @media (max-width: 1023px) {
+    .andy-portrait-img {
+      width: min(260px, 72vw) !important;
+      height: min(334px, 92vw) !important;
+    }
   }
 </style>

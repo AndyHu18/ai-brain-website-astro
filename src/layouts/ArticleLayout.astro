@@ -28,7 +28,7 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     <div class="container-wide py-12 md:py-20 lg:py-24">
       <div class="grid items-end gap-12 lg:gap-16 lg:grid-cols-[1fr_420px]">
 
-        <div class="hero-text min-w-0 max-w-[42rem]">
+        <div class="hero-text min-w-0 max-w-[42rem] order-2 lg:order-1">
 
           <div class="flex items-baseline gap-3 mb-8">
             <span class="eyebrow eyebrow-primary">系列文章</span>
@@ -70,7 +70,9 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
           <KeyStats stats={stats} />
         </div>
 
-        <HeroPortraitFigure variant="article" />
+        <div class="order-1 lg:order-2 flex justify-center lg:block">
+          <HeroPortraitFigure variant="article" />
+        </div>
       </div>
     </div>
   </header>
