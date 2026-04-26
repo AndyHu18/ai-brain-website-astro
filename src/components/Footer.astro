@@ -1,16 +1,67 @@
 ---
 import { SITE } from "../consts";
 ---
-<footer class="article-footer mt-12 py-10 border-t border-[var(--color-border-subtle)]
-               bg-[var(--color-bg-section)] text-center text-sm text-[var(--color-text-muted)]">
+<footer class="article-footer mt-24 pt-16 pb-12
+               bg-[var(--color-ink-midnight)]
+               text-[var(--color-paper)]">
   <div class="container-wide">
-    <div class="text-base font-black text-[var(--color-text-primary)] mb-2">
-      {SITE.name}<span class="text-[var(--color-primary)]">{SITE.brandSuffix}</span>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
+      {/* 左：品牌 */}
+      <div>
+        <div class="flex items-baseline gap-1 mb-4">
+          <span class="font-display-cjk font-black text-2xl tracking-tight">AI 智能大腦</span>
+          <span class="text-[var(--color-primary-soft)] text-2xl font-black">.</span>
+        </div>
+        <p class="text-[13px] leading-relaxed text-[var(--color-paper)]/65 max-w-xs">
+          {SITE.tagline}
+        </p>
+      </div>
+
+      {/* 中：系列導航 */}
+      <div>
+        <h4 class="eyebrow text-[var(--color-paper)]/50 mb-4">系列</h4>
+        <ul class="space-y-2">
+          <li>
+            <a href={SITE.overviewUrl}
+               class="text-[13px] text-[var(--color-paper)]/85
+                      hover:text-[var(--color-honey)]
+                      transition-colors">
+              網站經營 12 篇系列總覽
+            </a>
+          </li>
+          <li>
+            <a href={SITE.ctaUrl} target="_blank" rel="noopener"
+               class="text-[13px] text-[var(--color-paper)]/85
+                      hover:text-[var(--color-honey)]
+                      transition-colors">
+              加 LINE 免費診斷
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* 右：版權 */}
+      <div>
+        <h4 class="eyebrow text-[var(--color-paper)]/50 mb-4">關於</h4>
+        <p class="text-[12px] leading-relaxed text-[var(--color-paper)]/55">
+          {SITE.copyright}
+        </p>
+      </div>
     </div>
-    <p class="mb-4">{SITE.tagline}</p>
-    <p class="text-xs">
-      {SITE.copyright} ·
-      <a href={SITE.overviewUrl} class="text-[var(--color-primary)] hover:underline">系列總覽</a>
-    </p>
+
+    {/* 底部 hairline + 版權年份 */}
+    <hr class="border-0 h-px bg-[var(--color-paper)]/10 mt-12 mb-8" />
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <p class="text-[11px] tracking-[0.15em] uppercase text-[var(--color-paper)]/40">
+        Editorial Series · 2026
+      </p>
+      <p class="text-[11px] text-[var(--color-paper)]/40">
+        繁體中文 / Traditional Chinese
+      </p>
+    </div>
   </div>
 </footer>
+
+<style>
+  .font-display-cjk { font-family: var(--font-display-cjk); }
+</style>

@@ -1,0 +1,23 @@
+---
+// 全頁 scroll reveal IntersectionObserver
+// 用法：在元素上加 class="reveal"，進入視窗時自動加 .revealed
+---
+<script>
+  if ("IntersectionObserver" in window) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("revealed");
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+  } else {
+    // 舊瀏覽器降級：直接顯示
+    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("revealed"));
+  }
+</script>

@@ -2,46 +2,68 @@
 @plugin "@tailwindcss/typography";
 
 /* =============================================
-   DESIGN TOKENS — 跟原本 ai-brain-website 一致
+   DESIGN TOKENS — 東方精品編輯部
+   暖色基底 + 克制色彩 + 編輯式排版
    ============================================= */
 @theme {
-  --color-bg-light: oklch(0.99 0.003 80);
-  --color-bg-section: oklch(0.95 0.02 78);
-  --color-bg-card: oklch(0.98 0.012 78);
-  --color-bg-warm-blush: oklch(0.98 0.01 72);
+  /* === 背景：cream / ivory，避免純白刺眼 === */
+  --color-paper: oklch(0.985 0.006 75);          /* 主背景 — 米白如紙 */
+  --color-paper-warm: oklch(0.97 0.012 72);      /* 區塊背景 — 暖一階 */
+  --color-paper-deep: oklch(0.94 0.018 70);      /* 卡片底色 */
+  --color-paper-blush: oklch(0.965 0.015 68);    /* highlight box / pull quote */
 
-  --color-tech-titanium: oklch(0.18 0.03 50);
-  --color-tech-midnight: oklch(0.13 0.025 50);
+  /* === 深色（dark hero / footer 用）=== */
+  --color-ink-titanium: oklch(0.18 0.03 50);
+  --color-ink-midnight: oklch(0.13 0.025 50);
 
+  /* === 主色：Hermès 橙（保留原值） === */
   --color-primary: oklch(0.557 0.166 45);
-  --color-primary-light: oklch(0.6 0.17 46);
-  --color-primary-dark: oklch(0.5 0.15 43);
-  --color-accent: oklch(0.72 0.12 62);
+  --color-primary-soft: oklch(0.62 0.14 47);
+  --color-primary-deep: oklch(0.45 0.155 43);
 
-  --color-text-primary: oklch(0.12 0.02 50);
-  --color-text-secondary: oklch(0.18 0.025 50);
-  --color-text-muted: oklch(0.38 0.04 40);
-  --color-text-light: oklch(1 0.015 80);
+  /* === 副色：蜜糖色（保留原值） === */
+  --color-honey: oklch(0.72 0.12 62);
 
-  --color-border-subtle: oklch(0.27 0.035 25 / 0.1);
-  --color-border-default: oklch(0.27 0.035 25 / 0.2);
-  --color-border-accent: oklch(0.557 0.166 45 / 0.3);
+  /* === 文字 === */
+  --color-ink: oklch(0.16 0.025 50);             /* primary text — 暖近黑 */
+  --color-ink-muted: oklch(0.42 0.03 48);        /* 次要 — sepia gray */
+  --color-ink-faint: oklch(0.58 0.025 48);       /* meta info — 老照片色 */
+  --color-ink-light: oklch(0.99 0.005 80);       /* 反白文字 */
 
-  --font-serif: "Noto Serif TC", "Songti TC", serif;
-  --font-sans: "Noto Sans TC", -apple-system, sans-serif;
+  /* === 細線：低對比、暖色調，像書頁 === */
+  --color-rule-hair: oklch(0.5 0.05 45 / 0.12);    /* 1px hairline */
+  --color-rule-soft: oklch(0.5 0.06 45 / 0.18);    /* 2px refined */
+  --color-rule-bold: oklch(0.557 0.166 45 / 0.4);  /* primary @ 40% */
 
-  --spacing-container: 1200px;
+  /* === 字型系統 === */
+  /* 中文 display（大標）：Noto Serif TC 900，沉穩有重量 */
+  --font-display-cjk: "Noto Serif TC", "Songti TC", "STSong", serif;
+  /* Latin display（數字 / 英文標）：Fraunces — 變體、有 optical sizing */
+  --font-display-latin: "Fraunces", "Noto Serif TC", Georgia, serif;
+  /* 中文 body */
+  --font-body-cjk: "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+  /* Latin UI / body：Inter */
+  --font-ui: "Inter", "Noto Sans TC", -apple-system, sans-serif;
+  /* 標籤、eyebrow、small caps */
+  --font-mono-display: "Fraunces", "Noto Sans TC", monospace;
+
+  /* === 容器 === */
+  --spacing-container: 1280px;
+  --spacing-prose: 36rem;        /* 編輯式單欄寬 ~ 65 中文字 */
 
   --breakpoint-xs: 480px;
 }
 
 /* =============================================
-   BASE — Mobile-first
+   FONT IMPORTS — Fraunces (Latin display) + Inter (UI)
+   ============================================= */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,30..100&family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* =============================================
+   BASE
    ============================================= */
 @layer base {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -50,37 +72,171 @@
   html {
     font-size: 16px;
     scroll-behavior: smooth;
+    /* 防止水平捲動跑出去 */
+    overflow-x: hidden;
   }
 
   body {
-    font-family: var(--font-sans);
+    font-family: var(--font-body-cjk);
     font-size: 1rem;
-    line-height: 1.7;
-    color: var(--color-text-secondary);
-    background: var(--color-bg-light);
+    line-height: 1.75;
+    color: var(--color-ink);
+    background: var(--color-paper);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     word-break: break-word;
     overflow-wrap: anywhere;
+    /* 讓中英文混排對齊更好 */
+    text-spacing-trim: trim-start;
+    /* 紙張紋理（極弱噪點，模擬印刷紙）*/
+    background-image:
+      radial-gradient(at 0% 0%, oklch(0.97 0.018 75 / 0.5) 0%, transparent 50%),
+      radial-gradient(at 100% 100%, oklch(0.97 0.018 65 / 0.4) 0%, transparent 50%);
+    background-attachment: fixed;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: var(--color-text-primary);
+  /* 標題系統 */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display-cjk);
+    color: var(--color-ink);
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
-  img,
-  svg,
-  video {
+  /* 中英文之間自動加空隙（更精緻）*/
+  body { text-spacing-trim: trim-start; }
+
+  /* 連結基底 */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* 文字選取顏色 */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-ink-light);
+  }
+
+  /* Latin 數字用 tabular nums + Fraunces */
+  .tabular-display {
+    font-family: var(--font-display-latin);
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Image / video defaults */
+  img, svg, video {
     max-width: 100%;
     height: auto;
+    display: block;
   }
+}
 
-  a {
+/* =============================================
+   UTILITIES
+   ============================================= */
+
+/* 容器系統 */
+@utility container-wide {
+  max-width: var(--spacing-container);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (min-width: 768px) { padding-inline: 2.5rem; }
+  @media (min-width: 1280px) { padding-inline: 3rem; }
+}
+
+@utility container-prose {
+  max-width: var(--spacing-prose);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (min-width: 768px) { padding-inline: 0; }
+}
+
+/* Eyebrow（編輯式 small caps 標籤）*/
+@utility eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;        /* 11px */
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+@utility eyebrow-primary {
+  color: var(--color-primary);
+}
+
+/* 編輯式大標 */
+@utility editorial-h1 {
+  font-family: var(--font-display-cjk);
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw + 1rem, 4.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility editorial-h2 {
+  font-family: var(--font-display-cjk);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.5vw + 1rem, 2.25rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Body 文字流體 */
+@utility body-lg {
+  font-size: clamp(1rem, 0.4vw + 0.95rem, 1.1875rem);
+  line-height: 1.75;
+}
+
+/* Hairline 細線 */
+@utility rule-hairline {
+  border: 0;
+  height: 1px;
+  background: var(--color-rule-hair);
+}
+
+/* 動畫：scroll reveal stagger */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@utility revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 連結底線（從左滑入） */
+@utility link-underline {
+  position: relative;
+  display: inline;
+}
+@utility link-underline-target {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Drop cap (首字大寫) */
+@utility drop-cap {
+  &::first-letter {
+    font-family: var(--font-display-cjk);
+    font-weight: 900;
+    font-size: 4.5em;
+    line-height: 1;
+    float: left;
+    margin: 0.05em 0.12em 0 0;
     color: var(--color-primary);
-    text-decoration: none;
   }
 }

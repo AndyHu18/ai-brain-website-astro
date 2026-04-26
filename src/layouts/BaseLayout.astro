@@ -7,7 +7,7 @@ import { SITE } from "../consts";
 interface Props {
   title: string;
   description?: string;
-  articleNum?: string; // 給 navbar 用
+  articleNum?: string;
 }
 const { title, description = SITE.tagline, articleNum } = Astro.props;
 const fullTitle = `${title} | ${SITE.seriesName}`;
@@ -23,15 +23,17 @@ const fullTitle = `${title} | ${SITE.seriesName}`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="article" />
+    <meta name="generator" content={Astro.generator} />
 
+    {/* Fonts: Noto Serif TC (display CJK) + Noto Sans TC (body) — Fraunces & Inter 已在 global.css 透過 @import 載入 */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Noto+Serif+TC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="pt-16">
+  <body class="min-h-screen pt-16 md:pt-18">
     <Navbar articleNum={articleNum} />
     <slot />
     <Footer />

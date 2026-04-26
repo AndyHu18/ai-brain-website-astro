@@ -1,54 +1,69 @@
 ---
 import { SITE } from "../consts";
 interface Props {
-  articleNum?: string; // 若在文章頁，顯示「網站經營 12 篇系列 #N」
+  articleNum?: string;
 }
 const { articleNum } = Astro.props;
 const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SITE.overviewUrl;
 ---
 
 <nav
-  class="fixed top-0 inset-x-0 z-[1000] flex items-center
-         h-16 px-4 md:px-6
-         bg-[oklch(0.99_0.003_80/0.97)] backdrop-blur-sm
-         border-b border-[var(--color-border-subtle)]"
+  class="fixed top-0 inset-x-0 z-[1000]
+         h-16 md:h-18
+         bg-[var(--color-paper)]/85 backdrop-blur-lg
+         border-b border-[var(--color-rule-hair)]"
   role="navigation"
   aria-label="主選單"
 >
-  <div class="container-wide flex items-center justify-between gap-3 w-full">
-    {/* 左：品牌（連回系列總覽） */}
+  <div class="container-wide h-full flex items-center justify-between gap-4">
+    {/* 左：品牌 — 編輯式 wordmark */}
     <a
       href={SITE.overviewUrl}
-      class="text-base font-black tracking-wide text-[var(--color-text-primary)]
-             whitespace-nowrap hover:text-[var(--color-primary)] transition-colors"
+      class="group flex items-center gap-1 whitespace-nowrap"
       title="回到 12 篇系列總覽"
     >
-      {SITE.name}<span class="text-[var(--color-primary)]">{SITE.brandSuffix}</span>
+      <span class="font-display-cjk font-black text-[1.0625rem] md:text-lg tracking-tight text-[var(--color-ink)]
+                   group-hover:text-[var(--color-primary)] transition-colors duration-300">
+        AI 智能大腦
+      </span>
+      <span class="text-[var(--color-primary)] text-lg font-black">.</span>
     </a>
 
-    {/* 中：系列 label（手機隱藏） */}
+    {/* 中：系列 label — 中等斷點以上才出現 */}
     <a
       href={seriesHref}
-      class="hidden md:inline-flex items-center px-3 py-1
-             text-sm text-[var(--color-text-muted)]
-             bg-[var(--color-bg-section)]
-             border border-[var(--color-border-accent)] rounded-full
-             whitespace-nowrap hover:text-[var(--color-primary)] transition-colors"
+      class="hidden md:inline-flex items-center gap-2
+             px-3 py-1.5
+             eyebrow text-[var(--color-ink-muted)]
+             border border-[var(--color-rule-hair)] rounded-full
+             hover:border-[var(--color-rule-bold)] hover:text-[var(--color-primary)]
+             transition-all duration-300"
     >
-      {SITE.seriesName}
+      <span class="w-1 h-1 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span>
+      網站經營 12 篇系列
     </a>
 
-    {/* 右：CTA */}
+    {/* 右：CTA — 簡潔細邊 button */}
     <a
       href={SITE.ctaUrl}
       target="_blank"
       rel="noopener"
-      class="inline-flex items-center gap-1.5 px-4 py-2.5 min-h-[44px]
-             text-sm font-bold text-white
-             bg-[var(--color-primary)] hover:bg-[var(--color-primary-light)]
-             rounded-full whitespace-nowrap transition-all"
+      class="group inline-flex items-center gap-2 min-h-[44px]
+             px-4 md:px-5 py-2.5
+             text-[13px] font-semibold
+             text-[var(--color-paper)]
+             bg-[var(--color-ink)]
+             hover:bg-[var(--color-primary)]
+             rounded-full
+             transition-all duration-300
+             whitespace-nowrap"
     >
-      {SITE.ctaLabel} →
+      <span>免費診斷</span>
+      <span class="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">→</span>
     </a>
   </div>
 </nav>
+
+<style>
+  .font-display-cjk { font-family: var(--font-display-cjk); }
+</style>

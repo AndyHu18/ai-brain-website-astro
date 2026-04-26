@@ -1,31 +1,46 @@
 ---
-// hero 右側 Andy 大照片（mask 漸變、暖色光暈）
-// 手機版：隱藏（保留版面給文字）
+// Andy 大幅照片 — Aesop / 編輯式 portrait
+// 不要圓形、不要 mask 過度、保持人像沉穩
 ---
-<div class="hero-photo-wrap relative w-[460px] h-[580px] overflow-hidden self-end max-lg:hidden" aria-hidden="true">
-  <div class="hero-photo-glow absolute inset-[-20%] z-0 pointer-events-none"></div>
-  <img
-    src="/andy-photo.png"
-    alt=""
-    class="hero-photo-img relative z-10 w-full h-full object-cover object-top block"
-    loading="eager"
-  />
-</div>
+<figure class="hero-portrait relative max-lg:hidden self-end" aria-hidden="true">
+  <div class="hero-portrait-glow absolute inset-[-15%] z-0 pointer-events-none"></div>
+  <div class="relative z-10 overflow-hidden">
+    <img
+      src="/andy-photo.png"
+      alt=""
+      class="hero-portrait-img w-[420px] h-[540px] object-cover object-top block"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+  {/* 編輯式 caption — 像雜誌底部標註 */}
+  <figcaption class="absolute bottom-3 right-0 z-20
+                     eyebrow text-[var(--color-paper)]
+                     mix-blend-difference
+                     pl-3 border-l border-[var(--color-paper)]/40">
+    Andy &middot; 主筆
+  </figcaption>
+</figure>
 
 <style>
-  .hero-photo-glow {
-    background: radial-gradient(circle, oklch(0.557 0.166 45 / 0.3) 0%, transparent 60%);
-    filter: blur(40px);
+  .hero-portrait-glow {
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, oklch(0.557 0.166 45 / 0.35) 0%, transparent 65%);
+    filter: blur(50px);
   }
-  .hero-photo-img {
+  .hero-portrait-img {
+    /* 漸變淡出底部 + 左側 — 編輯式融入 */
     mask-image:
-      linear-gradient(to bottom, transparent 0%, black 5%, black 82%, transparent 100%),
-      linear-gradient(to right, transparent 0%, black 35%, black 100%);
+      linear-gradient(to bottom, transparent 0%, black 8%, black 88%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 30%, black 100%);
     mask-composite: intersect;
     -webkit-mask-image:
-      linear-gradient(to bottom, transparent 0%, black 5%, black 82%, transparent 100%),
-      linear-gradient(to right, transparent 0%, black 35%, black 100%);
+      linear-gradient(to bottom, transparent 0%, black 8%, black 88%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 30%, black 100%);
     -webkit-mask-composite: source-in;
-    filter: brightness(1.05) contrast(1.05);
+    filter: brightness(1.02) contrast(1.06) saturate(0.95);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-portrait:hover .hero-portrait-img {
+    transform: scale(1.015);
   }
 </style>

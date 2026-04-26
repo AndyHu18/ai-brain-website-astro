@@ -1,0 +1,31 @@
+---
+// 頂部閱讀進度條 — Hermès 橙、極細 2px、平滑 transform
+---
+<div
+  id="reading-progress"
+  class="fixed top-0 left-0 right-0 h-[2px] z-[1200] origin-left
+         bg-[var(--color-primary)] scale-x-0
+         pointer-events-none"
+  aria-hidden="true"
+></div>
+
+<script>
+  const bar = document.getElementById("reading-progress");
+  if (bar) {
+    let ticking = false;
+    const update = () => {
+      const h = document.documentElement;
+      const total = h.scrollHeight - h.clientHeight;
+      const progress = total > 0 ? Math.min(1, h.scrollTop / total) : 0;
+      bar.style.transform = `scaleX(${progress})`;
+      ticking = false;
+    };
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
+  }
+</script>

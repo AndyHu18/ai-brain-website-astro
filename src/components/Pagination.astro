@@ -1,5 +1,4 @@
 ---
-// 上下篇導航
 import { SERIES_ARTICLES } from "../consts";
 
 interface Props {
@@ -11,31 +10,68 @@ const prev = idx > 0 ? SERIES_ARTICLES[idx - 1] : null;
 const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
 ---
 
-<nav class="article-pagination grid grid-cols-1 md:grid-cols-2 gap-3 mt-12 mb-8" aria-label="文章導航">
-  {prev ? (
-    <a
-      href={`/articles/${prev.slug}/`}
-      class="block p-5 rounded-2xl
-             bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)]
-             hover:border-[var(--color-primary)] hover:shadow-md
-             transition-all"
-    >
-      <span class="block text-xs text-[var(--color-text-muted)] mb-1">← 上一篇 · 第 {prev.num} 篇</span>
-      <span class="block text-base font-bold text-[var(--color-text-primary)]">{prev.shortTitle}</span>
-    </a>
-  ) : <div class="hidden md:block" />}
+<nav class="article-pagination my-16 md:my-24" aria-label="文章導航">
+  <header class="flex items-center gap-3 mb-8">
+    <span class="eyebrow eyebrow-primary">繼續閱讀</span>
+    <hr class="rule-hairline flex-1" />
+  </header>
 
-  {next ? (
-    <a
-      href={`/articles/${next.slug}/`}
-      class="block p-5 rounded-2xl
-             bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)]
-             hover:border-[var(--color-primary)] hover:shadow-md
-             transition-all
-             md:text-right"
-    >
-      <span class="block text-xs text-[var(--color-text-muted)] mb-1">下一篇 · 第 {next.num} 篇 →</span>
-      <span class="block text-base font-bold text-[var(--color-text-primary)]">{next.shortTitle}</span>
-    </a>
-  ) : <div class="hidden md:block" />}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-rule-hair)] border border-[var(--color-rule-hair)]">
+    {prev ? (
+      <a
+        href={`/articles/${prev.slug}/`}
+        class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               p-6 md:p-8
+               transition-colors duration-300"
+      >
+        <div class="flex items-baseline gap-3 mb-3">
+          <span class="eyebrow text-[var(--color-ink-faint)]
+                       transition-transform duration-300 group-hover:-translate-x-0.5">
+            ← 上一篇
+          </span>
+          <span class="tabular-display text-[11px] tracking-[0.18em] text-[var(--color-primary)]">
+            第 {prev.num} 篇
+          </span>
+        </div>
+        <h3 class="font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
+                   text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                   transition-colors duration-300">
+          {prev.shortTitle}
+        </h3>
+      </a>
+    ) : (
+      <div class="hidden md:block bg-[var(--color-paper-warm)]"></div>
+    )}
+
+    {next ? (
+      <a
+        href={`/articles/${next.slug}/`}
+        class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               p-6 md:p-8
+               transition-colors duration-300
+               md:text-right"
+      >
+        <div class="flex md:justify-end items-baseline gap-3 mb-3">
+          <span class="tabular-display text-[11px] tracking-[0.18em] text-[var(--color-primary)]">
+            第 {next.num} 篇
+          </span>
+          <span class="eyebrow text-[var(--color-ink-faint)]
+                       transition-transform duration-300 group-hover:translate-x-0.5">
+            下一篇 →
+          </span>
+        </div>
+        <h3 class="font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
+                   text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                   transition-colors duration-300">
+          {next.shortTitle}
+        </h3>
+      </a>
+    ) : (
+      <div class="hidden md:block bg-[var(--color-paper-warm)]"></div>
+    )}
+  </div>
 </nav>
+
+<style>
+  .font-display-cjk { font-family: var(--font-display-cjk); }
+</style>
