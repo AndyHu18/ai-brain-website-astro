@@ -30,9 +30,9 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
         >←</a>
       )}
       <a
-        href={SITE.overviewUrl}
+        href={SITE.mainSiteUrl}
         class="group flex items-center gap-1 whitespace-nowrap"
-        title="回到 12 篇系列總覽"
+        title="返回 AI 智能大腦主站"
       >
         <span class="font-display-cjk font-black text-[1.0625rem] md:text-lg tracking-tight text-[var(--color-ink)]
                      group-hover:text-[var(--color-primary)] transition-colors duration-300">
@@ -156,6 +156,29 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
 
   {/* 捲動區域 */}
   <div class="flex-1 overflow-y-auto overscroll-contain">
+
+    {/* 返回主站連結（最顯眼,在嵌入式環境下提供回主品牌站的明確路徑） */}
+    <a
+      href={SITE.mainSiteUrl}
+      class="nav-panel-link flex items-center gap-3 px-5 py-4
+             border-b-2 border-[var(--color-primary)]
+             bg-[var(--color-paper-blush)]
+             text-[var(--color-ink)] hover:bg-[var(--color-primary)]
+             hover:text-[var(--color-paper)]
+             active:bg-[var(--color-primary-deep)]
+             transition-colors duration-200"
+    >
+      <span class="flex-none flex items-center justify-center
+                   w-7 h-7 rounded-full
+                   bg-[var(--color-primary)]
+                   text-[14px] font-bold leading-none
+                   text-[var(--color-paper)]">
+        ←
+      </span>
+      <span class="text-[14px] font-semibold">
+        返回 AI 智能大腦主站
+      </span>
+    </a>
 
     {/* 系列總覽連結 */}
     <a
