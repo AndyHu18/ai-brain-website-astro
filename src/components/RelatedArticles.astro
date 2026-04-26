@@ -67,21 +67,15 @@ const enriched = sorted.map(a => ({
         </span>
 
         <span class="block font-display-cjk
-                     text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem]
+                     text-[1.0625rem] md:text-[1.125rem] lg:text-[1.25rem]
                      font-bold leading-[1.4] tracking-tight
                      text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
                      transition-colors duration-300
-                     mb-2 line-clamp-2">
+                     line-clamp-3">
           {a.fullTitle}
         </span>
 
-        {a.subtitle && (
-          <p class="text-[12.5px] leading-[1.6] text-[var(--color-ink-muted)] line-clamp-2">
-            {a.subtitle}
-          </p>
-        )}
-
-        <div class="mt-4 inline-flex items-center gap-1.5 eyebrow text-[var(--color-ink-faint)]
+        <div class="mt-5 inline-flex items-center gap-1.5 eyebrow text-[var(--color-ink-faint)]
                     group-hover:text-[var(--color-primary)] transition-colors">
           閱讀全文
           <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
