@@ -1,5 +1,7 @@
 {
+  "outputDirectory": "dist",
   "redirects": [
+    { "source": "/", "destination": "/series/系列總覽/", "permanent": false },
     {
       "source": "/series",
       "destination": "/series/系列總覽/",
@@ -10,6 +12,5 @@
       "destination": "/series/系列總覽/",
       "permanent": false
     }
-  ],
-  "rewrites": [{ "source": "/series/(.*)", "destination": "/$1" }]
+  ]
 }

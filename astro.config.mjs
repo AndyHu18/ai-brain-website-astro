@@ -5,11 +5,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // No 'base' — static output stays at root paths.
-  // Vercel rewrites /series/* → /* in vercel.json.
-  redirects: {
-    '/': '/series/系列總覽/',
-  },
+  // base + outDir combo: files land at dist/series/*, Vercel serves dist/
+  // so /series/* maps to the actual built files.
+  base: '/series',
+  outDir: './dist/series',
   vite: {
     plugins: [tailwindcss()]
   }
