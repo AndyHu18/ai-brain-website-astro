@@ -83,12 +83,12 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
         <span class="ham-l"></span>
       </button>
 
-      {/* CTA */}
+      {/* CTA — 桌面才顯示（手機從漢堡選單底部進入） */}
       <a
         href={SITE.ctaUrl}
         target="_blank"
         rel="noopener"
-        class="group inline-flex items-center gap-2 min-h-[44px]
+        class="group hidden md:inline-flex items-center gap-2 min-h-[44px]
                px-4 md:px-5 py-2.5
                text-[13px] font-semibold
                text-[var(--color-paper)]
