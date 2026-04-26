@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import HeroPhoto from "../components/HeroPhoto.astro";
+import HeroPortraitFigure from "../components/HeroPortraitFigure.astro";
 import KeyStats from "../components/KeyStats.astro";
 import SidebarToc from "../components/SidebarToc.astro";
 import Pagination from "../components/Pagination.astro";
@@ -29,7 +29,7 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     <div class="container-wide py-12 md:py-20 lg:py-24">
       <div class="grid items-end gap-12 lg:gap-16 lg:grid-cols-[1fr_420px]">
 
-        <div class="hero-text reveal min-w-0 max-w-[42rem]">
+        <div class="hero-text min-w-0 max-w-[42rem]">
 
           <div class="flex items-baseline gap-3 mb-8">
             <span class="eyebrow eyebrow-primary">系列文章</span>
@@ -71,7 +71,7 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
           <KeyStats stats={stats} />
         </div>
 
-        <HeroPhoto />
+        <HeroPortraitFigure variant="article" />
       </div>
     </div>
   </header>
@@ -81,7 +81,7 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
 
     <article
       id="article-top"
-      class="article-body min-w-0 prose prose-neutral max-w-none lg:max-w-[42rem]"
+      class="article-body min-w-0 max-w-none lg:max-w-[42rem]"
     >
       <slot />
     </article>
@@ -186,8 +186,8 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     color: var(--color-primary);
   }
 
-  /* 第一段 drop cap */
-  .article-body :global(> p:first-of-type::first-letter) {
+  /* 第一段 drop cap — 不限制 direct child（Astro Content 可能包 wrapper）*/
+  .article-body :global(p:first-of-type::first-letter) {
     font-family: var(--font-display-cjk);
     font-weight: 900;
     font-size: 4.2em;
@@ -215,12 +215,14 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     position: absolute;
     left: 0.3rem;
     top: -0.4em;
+    z-index: 1;
     font-family: var(--font-display-latin);
     font-size: 4rem;
     line-height: 1;
     color: var(--color-primary);
     opacity: 0.35;
     font-style: italic;
+    pointer-events: none;
   }
   .article-body :global(blockquote)::after {
     content: "";
@@ -228,6 +230,7 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     left: 0;
     top: 0.5rem;
     bottom: 0.5rem;
+    z-index: 0;
     width: 2px;
     background: var(--color-primary);
   }

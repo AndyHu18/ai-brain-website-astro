@@ -8,8 +8,7 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
 ---
 
 <nav
-  class="fixed top-0 inset-x-0 z-[1000]
-         h-16 md:h-18
+  class="navbar-shell fixed top-0 inset-x-0 z-[1000]
          bg-[var(--color-paper)]/85 backdrop-blur-lg
          border-b border-[var(--color-rule-hair)]"
   role="navigation"
@@ -65,5 +64,15 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
 </nav>
 
 <style>
-  .font-display-cjk { font-family: var(--font-display-cjk); }
+  /* navbar 高度 = 64/80px + iOS notch 安全區
+     padding-top: env() 把 notch 區域含進 navbar，內容下沉至安全區 */
+  .navbar-shell {
+    height: calc(4rem + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+  }
+  @media (min-width: 768px) {
+    .navbar-shell {
+      height: calc(5rem + env(safe-area-inset-top));
+    }
+  }
 </style>

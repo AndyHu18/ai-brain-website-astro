@@ -1,9 +1,17 @@
 ---
-// 全頁 scroll reveal IntersectionObserver
-// 用法：在元素上加 class="reveal"，進入視窗時自動加 .revealed
+// 漸進增強 scroll reveal
+// 預設 .reveal 內容可見（無 JS / JS 失敗時不會空白）；
+// 此元件先 mark <html class="js">（CSS 看到才隱藏 + 等 observer 觸發）
 ---
+{/* inline blocking script: 讓 CSS 在第一次 paint 前就知道 JS 可用 */}
+<script is:inline>
+  document.documentElement.classList.add("js");
+</script>
+
 <script>
-  if ("IntersectionObserver" in window) {
+  // IntersectionObserver 觸發 .revealed — 含 fallback timeout 保證內容絕對可見
+  const reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && reveals.length > 0) {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -13,11 +21,30 @@
           }
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
+      { rootMargin: "100px 0px 100px 0px", threshold: 0 } // 寬鬆觸發，buffer 100px
     );
-    document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+    reveals.forEach((el) => obs.observe(el));
+
+    // 防呆：滾動超過 1 秒後若仍有未 reveal 的元素，全部強制顯示
+    // 避免 fast scroll 漏掉元素導致空白
+    let lastScrollTime = Date.now();
+    const onScroll = () => { lastScrollTime = Date.now(); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    setInterval(() => {
+      if (Date.now() - lastScrollTime > 1000) {
+        document.querySelectorAll(".reveal:not(.revealed)").forEach((el) => {
+          const r = el.getBoundingClientRect();
+          // 已滾過視窗（在視窗上方）→ 強制顯示
+          if (r.bottom < 0) {
+            el.classList.add("revealed");
+            obs.unobserve(el);
+          }
+        });
+      }
+    }, 1500);
   } else {
-    // 舊瀏覽器降級：直接顯示
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("revealed"));
+    // 不支援 observer → 全部直接顯示
+    reveals.forEach((el) => el.classList.add("revealed"));
   }
 </script>

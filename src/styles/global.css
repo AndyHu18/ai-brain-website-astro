@@ -37,21 +37,18 @@
   --color-rule-bold: oklch(0.557 0.166 45 / 0.4); /* primary @ 40% */
 
   /* === 字型系統 === */
-  /* 中文 display（大標）：Noto Serif TC 900，沉穩有重量 */
+  /* 中文 display（大標）：Noto Serif TC 900 */
   --font-display-cjk: "Noto Serif TC", "Songti TC", "STSong", serif;
-  /* Latin display（數字 / 英文標）：Fraunces — 變體、有 optical sizing */
+  /* Latin display（數字 / 英文標）：Fraunces optical sizing */
   --font-display-latin: "Fraunces", "Noto Serif TC", Georgia, serif;
   /* 中文 body */
   --font-body-cjk:
     "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
   /* Latin UI / body：Inter */
   --font-ui: "Inter", "Noto Sans TC", -apple-system, sans-serif;
-  /* 標籤、eyebrow、small caps */
-  --font-mono-display: "Fraunces", "Noto Sans TC", monospace;
 
   /* === 容器 === */
   --spacing-container: 1280px;
-  --spacing-prose: 36rem; /* 編輯式單欄寬 ~ 65 中文字 */
 
   --breakpoint-xs: 480px;
 }
@@ -66,6 +63,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  /* body 的 padding-top 跟著 navbar 高度（含 iOS 安全區）動態調整 */
+  .body-with-fixed-nav {
+    padding-top: calc(4rem + env(safe-area-inset-top));
+  }
+  @media (min-width: 768px) {
+    .body-with-fixed-nav {
+      padding-top: calc(5rem + env(safe-area-inset-top));
+    }
   }
 
   html {
@@ -83,11 +90,10 @@
     background: var(--color-paper);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    /* 讓中英文混排對齊更好 */
+    word-break: normal;
+    overflow-wrap: break-word;
     text-spacing-trim: trim-start;
-    /* 紙張紋理（極弱噪點，模擬印刷紙）*/
+    /* 紙張紋理（暖色徑向漸變）*/
     background-image:
       radial-gradient(at 0% 0%, oklch(0.97 0.018 75 / 0.5) 0%, transparent 50%),
       radial-gradient(
@@ -95,25 +101,27 @@
         oklch(0.97 0.018 65 / 0.4) 0%,
         transparent 50%
       );
-    background-attachment: fixed;
+    background-attachment: scroll;
+  }
+  /* iOS Safari + 大尺寸螢幕才用 fixed（mobile 用 fixed 會閃 + 性能差）*/
+  @media (min-width: 1024px) {
+    body {
+      background-attachment: fixed;
+    }
   }
 
-  /* 標題系統 */
+  /* 標題系統 — color: inherit 讓 dark section（footer / CTA）自動反白
+     避免「base 強制 ink 黑色」 + 「parent set white」的 cascade 衝突 */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display-cjk);
-    color: var(--color-ink);
+    color: inherit;
     font-weight: 700;
     line-height: 1.25;
     letter-spacing: -0.01em;
     text-wrap: balance;
-  }
-
-  /* 中英文之間自動加空隙（更精緻）*/
-  body {
-    text-spacing-trim: trim-start;
   }
 
   /* 連結基底 */
@@ -128,15 +136,6 @@
     color: var(--color-ink-light);
   }
 
-  /* Latin 數字用 tabular nums + Fraunces */
-  .tabular-display {
-    font-family: var(--font-display-latin);
-    font-feature-settings:
-      "tnum" 1,
-      "lnum" 1;
-    font-variant-numeric: tabular-nums;
-  }
-
   /* Image / video defaults */
   img,
   svg,
@@ -144,6 +143,51 @@
     max-width: 100%;
     height: auto;
     display: block;
+  }
+
+  /* Focus-visible ring — A11y for keyboard users
+     用 outline 而非 box-shadow，避免被父元素 overflow:hidden 切掉 */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* 圓形元素（pill/round button）focus 時 outline 也圓 */
+  a[class*="rounded-full"]:focus-visible,
+  button[class*="rounded-full"]:focus-visible {
+    outline-offset: 3px;
+    border-radius: 9999px;
+  }
+}
+
+/* =============================================
+   COMPONENTS — 所有檔案共用的 class
+   ============================================= */
+@layer components {
+  /* CJK display 字型 — 統一定義，免得每個 component 自己 <style> 重複 */
+  .font-display-cjk {
+    font-family: var(--font-display-cjk);
+  }
+  .font-display-latin {
+    font-family: var(--font-display-latin);
+  }
+  .font-body-cjk {
+    font-family: var(--font-body-cjk);
+  }
+  .font-ui {
+    font-family: var(--font-ui);
+  }
+
+  /* Latin 數字用 tabular nums + Fraunces optical sizing */
+  .tabular-display {
+    font-family: var(--font-display-latin);
+    font-feature-settings:
+      "tnum" 1,
+      "lnum" 1;
+    font-variant-numeric: tabular-nums;
+    font-variation-settings:
+      "opsz" 96,
+      "SOFT" 50;
   }
 }
 
@@ -161,15 +205,6 @@
   }
   @media (min-width: 1280px) {
     padding-inline: 3rem;
-  }
-}
-
-@utility container-prose {
-  max-width: var(--spacing-prose);
-  margin-inline: auto;
-  padding-inline: 1.25rem;
-  @media (min-width: 768px) {
-    padding-inline: 0;
   }
 }
 
@@ -221,41 +256,28 @@
   background: var(--color-rule-hair);
 }
 
-/* 動畫：scroll reveal stagger */
-@utility reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@utility revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 連結底線（從左滑入） */
-@utility link-underline {
-  position: relative;
-  display: inline;
-}
-@utility link-underline-target {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-/* Drop cap (首字大寫) */
-@utility drop-cap {
-  &::first-letter {
-    font-family: var(--font-display-cjk);
-    font-weight: 900;
-    font-size: 4.5em;
-    line-height: 1;
-    float: left;
-    margin: 0.05em 0.12em 0 0;
-    color: var(--color-primary);
+/* 動畫：scroll reveal — 用 CSS scroll-driven animation（modern, no-JS）
+   .reveal 元素自然呈現：先有 opacity 過渡但**失敗時也可見**
+   策略：用 transition + 觀察者「最多隱藏 200ms」原則
+   超過時間若沒被觀察就強制 revealed */
+@layer components {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  html.js .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .reveal,
+    html.js .reveal.revealed {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 }

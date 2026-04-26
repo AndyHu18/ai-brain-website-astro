@@ -1,0 +1,51 @@
+---
+// 統一的編輯式 Andy portrait — 接 size 變體
+interface Props {
+  variant?: "article" | "series";
+}
+const { variant = "article" } = Astro.props;
+
+const sizes = {
+  article: { w: "420px", h: "540px", glowOpacity: "0.35", blur: "50px", maskBottom: "8%", maskRight: "30%" },
+  series:  { w: "480px", h: "600px", glowOpacity: "0.42", blur: "60px", maskBottom: "6%", maskRight: "28%" },
+} as const;
+const s = sizes[variant];
+---
+<figure class="andy-portrait relative max-lg:hidden self-end" aria-hidden="true">
+  <div class="andy-portrait-glow absolute inset-[-15%] z-0 pointer-events-none"></div>
+  <img
+    src="/andy-photo.png"
+    alt=""
+    class="andy-portrait-img relative z-10 object-cover object-top block"
+    style={`width:${s.w};height:${s.h};`}
+    loading="eager"
+    decoding="async"
+  />
+</figure>
+
+<style define:vars={{
+  glowOpacity: s.glowOpacity,
+  blurAmount: s.blur,
+  maskBottom: s.maskBottom,
+  maskRight: s.maskRight,
+}}>
+  .andy-portrait-glow {
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, oklch(0.557 0.166 45 / var(--glowOpacity)) 0%, transparent 65%);
+    filter: blur(var(--blurAmount));
+  }
+  .andy-portrait-img {
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, black var(--maskBottom), black calc(100% - var(--maskBottom) - 4%), transparent 100%),
+      linear-gradient(to right, transparent 0%, black var(--maskRight), black 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, black var(--maskBottom), black calc(100% - var(--maskBottom) - 4%), transparent 100%),
+      linear-gradient(to right, transparent 0%, black var(--maskRight), black 100%);
+    -webkit-mask-composite: source-in;
+    filter: brightness(1.02) contrast(1.06) saturate(0.95);
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .andy-portrait:hover .andy-portrait-img {
+    transform: scale(1.012);
+  }
+</style>

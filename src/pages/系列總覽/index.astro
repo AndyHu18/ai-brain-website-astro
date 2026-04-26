@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import HeroPortrait from "../../components/HeroPortrait.astro";
+import HeroPortraitFigure from "../../components/HeroPortraitFigure.astro";
 import ScrollReveal from "../../components/ScrollReveal.astro";
 import { getCollection } from "astro:content";
 import { SERIES_ARTICLES, SITE } from "../../consts";
@@ -27,6 +27,7 @@ const totalReadMin = list.reduce((sum, a) => {
 <BaseLayout
   title="網站經營 12 篇系列總覽"
   description="12 篇實戰行銷系列，免費完整公開。從曝光、首頁設計到回頭客機制 — 找到你最薄弱的那一環，從那裡開始補。"
+  exactTitle={true}
 >
   <header class="series-hero relative overflow-hidden border-b border-[var(--color-rule-hair)]">
     <div class="container-wide pt-12 pb-16 md:pt-20 md:pb-24">
@@ -43,7 +44,7 @@ const totalReadMin = list.reduce((sum, a) => {
           </div>
 
           <h1 class="series-title font-display-cjk font-black text-[var(--color-ink)]
-                     mb-6 md:mb-8 text-wrap-balance">
+                     mb-6 md:mb-8 text-balance">
             <span class="block">你有網站，</span>
             <span class="block">但它有在替你<em class="not-italic text-[var(--color-primary)]">賺錢</em>嗎？</span>
           </h1>
@@ -88,14 +89,14 @@ const totalReadMin = list.reduce((sum, a) => {
           </div>
         </div>
 
-        <HeroPortrait />
+        <HeroPortraitFigure variant="series" />
       </div>
     </div>
   </header>
 
   <section class="container-wide py-16 md:py-24 max-w-[48rem]">
     <p class="reveal font-display-cjk text-[1.5rem] md:text-[2rem] leading-[1.5] text-[var(--color-ink)]
-              text-wrap-balance">
+              text-balance">
       這不是 12 篇獨立的文章，<span class="text-[var(--color-primary)]">是一套完整的系統</span>。
     </p>
     <p class="reveal mt-4 text-[var(--color-ink-muted)] text-[1.0625rem] leading-[1.85]">
@@ -103,9 +104,9 @@ const totalReadMin = list.reduce((sum, a) => {
     </p>
   </section>
 
-  <section id="articles" class="container-wide pb-24">
+  <section id="articles" class="container-wide pb-24" aria-labelledby="articles-heading">
     <header class="flex items-baseline gap-4 mb-10 md:mb-12">
-      <span class="eyebrow eyebrow-primary">12 篇深度文章</span>
+      <h2 id="articles-heading" class="eyebrow eyebrow-primary">12 篇深度文章</h2>
       <hr class="rule-hairline flex-1" />
       <span class="text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
         每篇 6–8 分鐘
@@ -170,7 +171,8 @@ const totalReadMin = list.reduce((sum, a) => {
       <span class="eyebrow text-[var(--color-honey)]">讀完，然後呢？</span>
       <h2 class="reveal mt-6 font-display-cjk font-bold
                  text-[2rem] md:text-[2.75rem] leading-[1.3]
-                 max-w-[40rem] mx-auto text-wrap-balance">
+                 text-[var(--color-paper)]
+                 max-w-[40rem] mx-auto text-balance">
         免費讓我們看看<br />
         你的網站漏了哪幾塊
       </h2>
@@ -181,7 +183,7 @@ const totalReadMin = list.reduce((sum, a) => {
       </p>
       <a href={SITE.ctaUrl} target="_blank" rel="noopener"
          class="group inline-flex items-center gap-2 mt-10
-                px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-light)]
+                px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-soft)]
                 text-[var(--color-paper)] text-[15px] font-semibold
                 rounded-full transition-all duration-300">
         加 LINE 預約免費診斷
@@ -194,8 +196,6 @@ const totalReadMin = list.reduce((sum, a) => {
 </BaseLayout>
 
 <style>
-  .font-display-cjk { font-family: var(--font-display-cjk); }
-  .text-wrap-balance { text-wrap: balance; }
   .series-title {
     font-size: clamp(2.25rem, 4vw + 1rem, 4.5rem);
     line-height: 1.1;

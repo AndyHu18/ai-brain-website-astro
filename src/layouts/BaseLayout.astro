@@ -8,9 +8,11 @@ interface Props {
   title: string;
   description?: string;
   articleNum?: string;
+  /** 若 true，title 不附加「| 網站經營 12 篇系列」後綴（避免重複）*/
+  exactTitle?: boolean;
 }
-const { title, description = SITE.tagline, articleNum } = Astro.props;
-const fullTitle = `${title} | ${SITE.seriesName}`;
+const { title, description = SITE.tagline, articleNum, exactTitle = false } = Astro.props;
+const fullTitle = exactTitle ? title : `${title} | ${SITE.seriesName}`;
 ---
 <!doctype html>
 <html lang="zh-TW">
@@ -25,7 +27,7 @@ const fullTitle = `${title} | ${SITE.seriesName}`;
     <meta property="og:type" content="article" />
     <meta name="generator" content={Astro.generator} />
 
-    {/* Fonts: Noto Serif TC (display CJK) + Noto Sans TC (body) — Fraunces & Inter 已在 global.css 透過 @import 載入 */}
+    {/* Noto fonts — Fraunces & Inter 已在 global.css 透過 @import 載入 */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -33,7 +35,7 @@ const fullTitle = `${title} | ${SITE.seriesName}`;
       rel="stylesheet"
     />
   </head>
-  <body class="min-h-screen pt-16 md:pt-18">
+  <body class="min-h-screen body-with-fixed-nav">
     <Navbar articleNum={articleNum} />
     <slot />
     <Footer />

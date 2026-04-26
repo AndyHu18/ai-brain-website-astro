@@ -33,11 +33,11 @@ const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
             第 {prev.num} 篇
           </span>
         </div>
-        <h3 class="font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
+        <span class="block font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
                    text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
                    transition-colors duration-300">
           {prev.shortTitle}
-        </h3>
+        </span>
       </a>
     ) : (
       <div class="hidden md:block bg-[var(--color-paper-warm)]"></div>
@@ -60,18 +60,14 @@ const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
             下一篇 →
           </span>
         </div>
-        <h3 class="font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
+        <span class="block font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
                    text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
                    transition-colors duration-300">
           {next.shortTitle}
-        </h3>
+        </span>
       </a>
     ) : (
       <div class="hidden md:block bg-[var(--color-paper-warm)]"></div>
     )}
   </div>
 </nav>
-
-<style>
-  .font-display-cjk { font-family: var(--font-display-cjk); }
-</style>

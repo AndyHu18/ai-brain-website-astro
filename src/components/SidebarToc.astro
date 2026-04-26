@@ -88,22 +88,27 @@ const tocItems = headings.filter(h => h.depth === 2);
 <script>
   // TOC 滾動高亮 — 編輯式 active state（左邊條變橘）
   const links = document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
+  const linkBySlug = new Map<string, HTMLAnchorElement>();
+  links.forEach((l) => {
+    const slug = l.getAttribute("data-toc-link");
+    if (slug) linkBySlug.set(slug, l);
+  });
+
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         const id = entry.target.id;
         if (!id) return;
-        const link = document.querySelector(`[data-toc-link="${id}"]`);
-        if (!link) return;
-        if (entry.isIntersecting) {
-          links.forEach(l => l.classList.remove("toc-active"));
-          link.classList.add("toc-active");
-        }
+        const link = linkBySlug.get(id);
+        if (!link || !entry.isIntersecting) return;
+        links.forEach((l) => l.classList.remove("toc-active"));
+        link.classList.add("toc-active");
       });
     },
     { rootMargin: "-15% 0px -65% 0px" }
   );
-  document.querySelectorAll("article h2[id]").forEach(h => observer.observe(h));
+  // .article-body 比 article 更精確（避免抓到 RelatedArticles 等其他區塊的 h2）
+  document.querySelectorAll(".article-body h2[id]").forEach((h) => observer.observe(h));
 </script>
 
 <style>

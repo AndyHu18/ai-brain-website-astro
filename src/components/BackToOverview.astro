@@ -9,8 +9,7 @@ const href = `${SITE.overviewUrl}#article-${articleNum}`;
 
 <a
   href={href}
-  class="group fixed z-[1100]
-         top-[5.5rem] left-6
+  class="bto-pill group fixed z-[1100]
          hidden md:inline-flex items-center gap-2
          px-3.5 py-2 pl-3
          bg-[var(--color-ink-midnight)]
@@ -24,7 +23,7 @@ const href = `${SITE.overviewUrl}#article-${articleNum}`;
          hover:border-[var(--color-honey)]
          hover:-translate-x-0.5
          hover:shadow-[0_12px_28px_-8px_oklch(0.557_0.166_45_/_0.45)]
-         transition-all duration-400 ease-out"
+         transition-all duration-300 ease-out"
   aria-label="回到系列總覽"
 >
   <span
@@ -37,3 +36,11 @@ const href = `${SITE.overviewUrl}#article-${articleNum}`;
     12 篇導讀
   </span>
 </a>
+
+<style>
+  /* BTO 位置：navbar 下方 + iOS 安全區 + 左側 padding */
+  .bto-pill {
+    top: calc(5rem + env(safe-area-inset-top) + 0.75rem);
+    left: calc(1.5rem + env(safe-area-inset-left));
+  }
+</style>
