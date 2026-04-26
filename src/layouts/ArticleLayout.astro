@@ -286,4 +286,18 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     :global(.reveal),
     :global(.revealed) { opacity: 1; transform: none; transition: none; }
   }
+
+  @media (max-width: 640px) {
+    .article-body :global(table) {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-size: 13px;
+    }
+    .article-body :global(th),
+    .article-body :global(td) {
+      min-width: 5rem;
+      white-space: nowrap;
+    }
+  }
 </style>
