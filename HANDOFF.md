@@ -1,22 +1,23 @@
 # AI 智能大腦 — 12 篇系列 Astro 站 · Handoff
 
-最後更新：2026-04-26 by Claude Code session
+最後更新：2026-04-26 session 2 by Claude Code
 
 ---
 
 ## 🌐 線上 / 部署
 
-| 項目 | 連結 |
-|------|------|
-| **正式站** | https://ai-brain-website.vercel.app |
-| 系列總覽（首頁 redirect 到此）| https://ai-brain-website.vercel.app/系列總覽/ |
-| 文章範例 | https://ai-brain-website.vercel.app/articles/retention/ |
-| GitHub repo | https://github.com/AndyHu18/ai-brain-website-astro |
-| Vercel project | `ai-brain-website`（renamed from `ai-brain-website-astro`）|
-| Vercel team ID | `team_ymsxuSPl43kbRZdvT5JRIWNN` |
-| Vercel project ID | `prj_aJ3c6pXF7UULpJbhwr1PuTKp3xqc` |
+| 項目                           | 連結                                                        |
+| ------------------------------ | ----------------------------------------------------------- |
+| **正式站**                     | https://ai-brain-website.vercel.app                         |
+| 系列總覽（首頁 redirect 到此） | https://ai-brain-website.vercel.app/系列總覽/               |
+| 文章範例                       | https://ai-brain-website.vercel.app/articles/retention/     |
+| GitHub repo                    | https://github.com/AndyHu18/ai-brain-website-astro          |
+| Vercel project                 | `ai-brain-website`（renamed from `ai-brain-website-astro`） |
+| Vercel team ID                 | `team_ymsxuSPl43kbRZdvT5JRIWNN`                             |
+| Vercel project ID              | `prj_aJ3c6pXF7UULpJbhwr1PuTKp3xqc`                          |
 
 **部署機制**：
+
 - GitHub `master` push → Vercel auto-deploy（已綁定）
 - `npx vercel deploy` 也可手動觸發
 - alias 主網域命令：`npx vercel alias set <new-deploy-url> ai-brain-website.vercel.app`
@@ -27,12 +28,12 @@
 
 ## 📂 專案位置
 
-| 用途 | 路徑 |
-|------|------|
-| **新站源碼（Astro）** | `C:/Users/user/Desktop/ai-brain-astro/` |
-| **舊站源碼**（純 HTML，已下架但保留）| `C:/Users/user/Desktop/Claude code/ai-brain-deploy/` |
-| 原始專案（reference）| `C:/Users/user/Desktop/專案_程式/ai-brain-website/` |
-| Word docx 來源 | `C:/Users/user/Desktop/系列總覽.docx` |
+| 用途                                  | 路徑                                                 |
+| ------------------------------------- | ---------------------------------------------------- |
+| **新站源碼（Astro）**                 | `C:/Users/user/Desktop/ai-brain-astro/`              |
+| **舊站源碼**（純 HTML，已下架但保留） | `C:/Users/user/Desktop/Claude code/ai-brain-deploy/` |
+| 原始專案（reference）                 | `C:/Users/user/Desktop/專案_程式/ai-brain-website/`  |
+| Word docx 來源                        | `C:/Users/user/Desktop/系列總覽.docx`                |
 
 ---
 
@@ -47,6 +48,7 @@ cheerio + turndown（內容抽取，僅 build-time 用）
 ```
 
 **Build / Dev**：
+
 ```bash
 cd C:/Users/user/Desktop/ai-brain-astro
 npm run dev    # localhost:4321
@@ -54,6 +56,7 @@ npm run build  # output to ./dist
 ```
 
 **Dev server config**：
+
 - `.claude/launch.json` 在 `C:/Users/user/Desktop/Claude code/.claude/launch.json`
 - name: `ai-brain-astro`, port: 4321
 
@@ -119,6 +122,7 @@ ai-brain-astro/
 ## 🎨 設計系統（global.css `@theme`）
 
 **色彩**（oklch 暖色基底）：
+
 - `--color-paper`：主背景（cream）
 - `--color-paper-warm/blush`：區塊 / 卡片底
 - `--color-ink-midnight/titanium`：暗色 hero/footer/CTA
@@ -128,24 +132,29 @@ ai-brain-astro/
 - `--color-rule-hair/soft/bold`：細線 3 階
 
 **字型**：
+
 - `--font-display-cjk`：Noto Serif TC 900（中文大標）
 - `--font-display-latin`：Fraunces optical sizing（拉丁/數字）
 - `--font-body-cjk`：Noto Sans TC（中文 body）
 - `--font-ui`：Inter（UI / eyebrow）
 
 **Utilities**（global.css `@utility`）：
+
 - `container-wide` / `eyebrow` / `eyebrow-primary`
 - `editorial-h1` / `editorial-h2` / `body-lg`
 - `rule-hairline`
 
 **Components 共用 class**（global.css `@layer components`）：
+
 - `.font-display-cjk` / `.font-display-latin` / `.font-body-cjk` / `.font-ui`
 - `.tabular-display`（Fraunces + tnum + opsz 96）
 - `html.js .reveal` / `html.js .reveal.revealed`（scroll reveal 漸進增強）
 
 ---
 
-## ✅ 已完成（這個 session）
+## ✅ 已完成（累計）
+
+### Session 1（初版）
 
 1. **Astro 重構**：從純 HTML 站搬到 Astro 6 + TS + Tailwind v4
 2. **12 篇文章 migration**：cheerio + turndown 從舊 HTML 抽到 markdown
@@ -156,31 +165,47 @@ ai-brain-astro/
 7. **解 Vercel preview protection**：公開可訪問
 8. **舊專案 rename → legacy**：保留備援
 
+### Session 2（2026-04-26）｜commit `4e6f363` + `6611e87`
+
+9. **11 篇文章內容修復**（commit `4e6f363`）：HTML→markdown 抽取產生的結構損壞全修
+   - 03-seo.md：3 層差異化 H3 區塊重建（第一/二/三層）
+   - 04-google.md：4 元素 H3 區塊 + 比較段落修復
+   - 其餘 9 篇：各類 mash artifact 已清理
+10. **手機版表格 RWD**：ArticleLayout 加 `overflow-x: auto` + 13px + nowrap
+11. **Navbar 返回箭頭**：文章頁手機版加 `← AI 智能大腦.`，桌面 `md:hidden` 不顯示，使用 Unicode `←` 與 CTA `→` 統一調性
+12. **照片手機版顯示**：移除 `max-lg:hidden`，手機 CSS 縮至 `min(260px, 72vw) × min(334px, 92vw)`
+13. **Hero 照片排序**：手機版照片 `order-1` 排在標題文字之上（grid CSS order）
+
 ---
 
-## ⚠️ 已知尚待處理（下個 session 可做）
+## ⚠️ 尚待處理（下個 session）
 
-### A. 內容潤飾（content polish）
-**11 篇 markdown 是從舊 HTML 自動抽取的**，body 內文會有結構碎片：
-- 例：`錯誤一` `錯誤二` 這種 mistake-card label 變成 plain text 而非 H3
-- 例：`✕` `✓` 標籤變成 plain text 跟內文混在一起
-- 例：`來源 1 · 必做｜...` 這種複合 label 失去 design hierarchy
-- **要做**：手動逐篇打開 `src/content/articles/0X-*.md` 校對 + 加 H3 標題 + 重排 list
+### A. 內容二次校對（建議做）
+
+主要 11 篇已修，但**仍可能有細節殘留**：
+
+- 部分文章的 `✕ 弱` / `✓ 強` 範例是否獨立一行？
+- 自我診斷區塊（🔍 / ⚡）是否有結構 hierarchy？
+- 建議做法：每篇在 localhost:4321 瀏覽一次，目測有無明顯排版問題
 
 ### B. 圖片優化
+
 - `public/andy-photo.png` 704KB → 可用 Astro Image component（`<Image>`）+ WebP
 - 12 篇文章內**沒有圖**（純文字），可考慮加配圖（Gemini 生圖工作流：見 `~/.claude/rules/gemini-model.md`）
 
 ### C. SEO + 結構化資料
+
 - 已有 og:title / og:description / og:type=article
 - **沒做**：JSON-LD Article schema、sitemap.xml、robots.txt
 - Astro 有 `@astrojs/sitemap` integration 可一鍵加
 
 ### D. 性能
+
 - Fonts 已 preconnect + display=swap
 - **沒做**：font preload critical fonts（hero h1 用的 Noto Serif TC 900）
 
 ### E. Analytics
+
 - 沒裝任何 analytics（Plausible / Google Analytics）
 
 ---
