@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import HeroPortraitFigure from "../../components/HeroPortraitFigure.astro";
-import ScrollReveal from "../../components/ScrollReveal.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import HeroPortraitFigure from "../../../components/HeroPortraitFigure.astro";
+import ScrollReveal from "../../../components/ScrollReveal.astro";
 import { getCollection } from "astro:content";
-import { SERIES_ARTICLES, SITE, BASE_PATH } from "../../consts";
+import { SERIES_ARTICLES, SITE, BASE_PATH } from "../../../consts";
 
 const articles = await getCollection("articles", ({ data }) => !data.draft);
 const articlesBySlug = new Map(articles.map(a => [a.data.slug, a.data]));

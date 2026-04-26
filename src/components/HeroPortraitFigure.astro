@@ -1,5 +1,4 @@
 ---
-import { BASE_PATH } from "../consts";
 // 統一的編輯式 Andy portrait — 接 size 變體
 interface Props {
   variant?: "article" | "series";
@@ -15,7 +14,7 @@ const s = sizes[variant];
 <figure class="andy-portrait relative self-end mx-auto lg:mx-0" aria-hidden="true">
   <div class="andy-portrait-glow absolute inset-[-15%] z-0 pointer-events-none"></div>
   <img
-    src={`${BASE_PATH}/andy-photo.png`}
+    src="/andy-photo.png"
     alt=""
     class="andy-portrait-img relative z-10 object-cover object-top block"
     style={`width:${s.w};height:${s.h};`}
