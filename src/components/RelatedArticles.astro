@@ -1,6 +1,7 @@
 ---
-// 「你可能感興趣」— 推薦 3 篇（排除當前 + 上下篇，剩餘隨機）
+// 「你可能感興趣」— 推薦 3 篇（排除當前 + 上下篇，剩餘從遠處取）
 import { SERIES_ARTICLES } from "../consts";
+import { getCollection } from "astro:content";
 
 interface Props {
   currentNum: string;
@@ -8,7 +9,6 @@ interface Props {
 const { currentNum } = Astro.props;
 const idx = SERIES_ARTICLES.findIndex(a => a.num === currentNum);
 
-// 排除當前 + 上下篇，從剩餘 9 篇選 3 篇
 const exclude = new Set([
   currentNum,
   SERIES_ARTICLES[idx - 1]?.num,
@@ -16,22 +16,33 @@ const exclude = new Set([
 ].filter(Boolean));
 
 const candidates = SERIES_ARTICLES.filter(a => !exclude.has(a.num));
-// 簡單選法：依距離當前文章遠近，取 3 篇
 const sorted = candidates
   .map(a => ({ ...a, distance: Math.abs(parseInt(a.num) - parseInt(currentNum)) }))
-  .sort((a, b) => b.distance - a.distance) // 距離遠的放前面（topic 多樣性）
+  .sort((a, b) => b.distance - a.distance)
   .slice(0, 3);
+
+// 從 content collection 拉完整 title + subtitle
+const articles = await getCollection("articles", ({ data }) => !data.draft);
+const bySlug = new Map(articles.map(a => [a.data.slug, a.data]));
+
+const enriched = sorted.map(a => ({
+  ...a,
+  fullTitle: bySlug.get(a.slug)?.title || a.shortTitle,
+  subtitle: bySlug.get(a.slug)?.subtitle || "",
+  readTime: bySlug.get(a.slug)?.readTime || "8 分鐘",
+}));
 ---
 
-<section class="related-articles my-16 md:my-20" aria-label="你可能也有興趣">
-  <header class="flex items-center gap-3 mb-8">
+<section class="related-articles my-12 md:my-20" aria-label="你可能也有興趣">
+  <header class="flex items-center gap-3 mb-6 md:mb-8">
     <span class="eyebrow eyebrow-primary">你可能感興趣</span>
     <hr class="rule-hairline flex-1" />
   </header>
 
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--color-rule-hair)]
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-px
+              bg-[var(--color-rule-hair)]
               border border-[var(--color-rule-hair)]">
-    {sorted.map(a => (
+    {enriched.map(a => (
       <a
         href={`/articles/${a.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
@@ -43,20 +54,48 @@ const sorted = candidates
             第 {a.num} 篇
           </span>
           <hr class="rule-hairline flex-1" />
-          <span class="eyebrow text-[var(--color-ink-faint)]
-                       transition-transform duration-300 group-hover:translate-x-0.5">
-            →
+          <span class="text-[10px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
+            {a.readTime}
           </span>
         </div>
-        <span class="block font-display-cjk text-[1.0625rem] md:text-[1.125rem] font-bold leading-snug
-                     text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
-                     transition-colors duration-300">
-          {a.shortTitle}
-        </span>
-        <p class="mt-2 text-[12px] tracking-[0.05em] text-[var(--color-ink-faint)]">
+
+        <span class="inline-block px-2 py-0.5 mb-3
+                     border border-[var(--color-rule-bold)]
+                     text-[10px] tracking-[0.18em] uppercase font-semibold
+                     text-[var(--color-primary)] rounded-full">
           {a.badge}
-        </p>
+        </span>
+
+        <span class="block font-display-cjk
+                     text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem]
+                     font-bold leading-[1.4] tracking-tight
+                     text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                     transition-colors duration-300
+                     mb-2 line-clamp-2">
+          {a.fullTitle}
+        </span>
+
+        {a.subtitle && (
+          <p class="text-[12.5px] leading-[1.6] text-[var(--color-ink-muted)] line-clamp-2">
+            {a.subtitle}
+          </p>
+        )}
+
+        <div class="mt-4 inline-flex items-center gap-1.5 eyebrow text-[var(--color-ink-faint)]
+                    group-hover:text-[var(--color-primary)] transition-colors">
+          閱讀全文
+          <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+        </div>
       </a>
     ))}
   </div>
 </section>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

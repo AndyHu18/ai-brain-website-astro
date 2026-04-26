@@ -1,0 +1,39 @@
+---
+// 文章末尾的「回到系列總覽」明顯按鈕區
+import { SITE } from "../consts";
+---
+<section class="return-section my-12 md:my-16" aria-label="回到系列總覽">
+  <div class="border border-[var(--color-rule-bold)]
+              bg-[var(--color-paper-blush)]
+              rounded-2xl
+              p-8 md:p-10 lg:p-12
+              text-center">
+    <span class="eyebrow eyebrow-primary">系列導航</span>
+    <p class="mt-4 font-display-cjk text-[1.25rem] md:text-[1.5rem] leading-[1.5]
+              text-[var(--color-ink)] text-balance max-w-[28rem] mx-auto">
+      想看完整 12 篇系列？<br />
+      <span class="text-[var(--color-primary)]">回到總覽挑下一篇讀</span>
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 mt-8">
+      <a href={SITE.overviewUrl}
+         class="group inline-flex items-center gap-2 min-h-[44px]
+                px-6 md:px-8 py-3.5
+                bg-[var(--color-ink)] hover:bg-[var(--color-primary)]
+                text-[var(--color-paper)] text-[14px] font-semibold
+                rounded-full transition-all duration-300">
+        <span class="transition-transform duration-300 group-hover:-translate-x-0.5">←</span>
+        回到 12 篇系列總覽
+      </a>
+      <a href={SITE.ctaUrl} target="_blank" rel="noopener"
+         class="group inline-flex items-center gap-2 min-h-[44px]
+                px-6 md:px-8 py-3.5
+                border border-[var(--color-rule-bold)]
+                text-[var(--color-ink)] hover:bg-[var(--color-paper)]
+                text-[14px] font-semibold
+                rounded-full transition-all duration-300">
+        加 LINE 免費診斷
+        <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,42 +1,63 @@
 ---
 import { SERIES_ARTICLES } from "../consts";
+import { getCollection } from "astro:content";
 
 interface Props {
   currentNum: string;
 }
 const { currentNum } = Astro.props;
 const idx = SERIES_ARTICLES.findIndex(a => a.num === currentNum);
-const prev = idx > 0 ? SERIES_ARTICLES[idx - 1] : null;
-const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
+const prevSeries = idx > 0 ? SERIES_ARTICLES[idx - 1] : null;
+const nextSeries = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
+
+// 從 content collection 拉完整 title
+const articles = await getCollection("articles", ({ data }) => !data.draft);
+const bySlug = new Map(articles.map(a => [a.data.slug, a.data]));
+
+const prev = prevSeries ? {
+  ...prevSeries,
+  fullTitle: bySlug.get(prevSeries.slug)?.title || prevSeries.shortTitle,
+  badge: bySlug.get(prevSeries.slug)?.badge || prevSeries.badge,
+} : null;
+const next = nextSeries ? {
+  ...nextSeries,
+  fullTitle: bySlug.get(nextSeries.slug)?.title || nextSeries.shortTitle,
+  badge: bySlug.get(nextSeries.slug)?.badge || nextSeries.badge,
+} : null;
 ---
 
-<nav class="article-pagination my-16 md:my-24" aria-label="文章導航">
-  <header class="flex items-center gap-3 mb-8">
+<nav class="article-pagination my-12 md:my-20" aria-label="文章導航">
+  <header class="flex items-center gap-3 mb-6 md:mb-8">
     <span class="eyebrow eyebrow-primary">繼續閱讀</span>
     <hr class="rule-hairline flex-1" />
   </header>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--color-rule-hair)] border border-[var(--color-rule-hair)]">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-px
+              bg-[var(--color-rule-hair)]
+              border border-[var(--color-rule-hair)]">
     {prev ? (
       <a
         href={`/articles/${prev.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
-               p-6 md:p-8
+               p-5 md:p-7 lg:p-8
                transition-colors duration-300"
       >
-        <div class="flex items-baseline gap-3 mb-3">
+        <div class="flex items-baseline gap-3 mb-2 md:mb-3 flex-wrap">
           <span class="eyebrow text-[var(--color-ink-faint)]
                        transition-transform duration-300 group-hover:-translate-x-0.5">
             ← 上一篇
           </span>
           <span class="tabular-display text-[11px] tracking-[0.18em] text-[var(--color-primary)]">
-            第 {prev.num} 篇
+            第 {prev.num} 篇 · {prev.badge}
           </span>
         </div>
-        <span class="block font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
-                   text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
-                   transition-colors duration-300">
-          {prev.shortTitle}
+        <span class="block font-display-cjk
+                     text-[1.0625rem] md:text-[1.125rem] lg:text-[1.25rem]
+                     font-bold leading-[1.4] tracking-tight
+                     text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                     transition-colors duration-300
+                     line-clamp-2">
+          {prev.fullTitle}
         </span>
       </a>
     ) : (
@@ -47,23 +68,26 @@ const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
       <a
         href={`/articles/${next.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
-               p-6 md:p-8
+               p-5 md:p-7 lg:p-8
                transition-colors duration-300
                md:text-right"
       >
-        <div class="flex md:justify-end items-baseline gap-3 mb-3">
+        <div class="flex md:justify-end items-baseline gap-3 mb-2 md:mb-3 flex-wrap">
           <span class="tabular-display text-[11px] tracking-[0.18em] text-[var(--color-primary)]">
-            第 {next.num} 篇
+            第 {next.num} 篇 · {next.badge}
           </span>
           <span class="eyebrow text-[var(--color-ink-faint)]
                        transition-transform duration-300 group-hover:translate-x-0.5">
             下一篇 →
           </span>
         </div>
-        <span class="block font-display-cjk text-[1.125rem] md:text-xl font-bold leading-snug
-                   text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
-                   transition-colors duration-300">
-          {next.shortTitle}
+        <span class="block font-display-cjk
+                     text-[1.0625rem] md:text-[1.125rem] lg:text-[1.25rem]
+                     font-bold leading-[1.4] tracking-tight
+                     text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                     transition-colors duration-300
+                     line-clamp-2">
+          {next.fullTitle}
         </span>
       </a>
     ) : (
@@ -71,3 +95,12 @@ const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
     )}
   </div>
 </nav>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

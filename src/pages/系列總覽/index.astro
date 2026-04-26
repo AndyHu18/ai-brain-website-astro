@@ -54,20 +54,23 @@ const totalReadMin = list.reduce((sum, a) => {
             這 12 篇把每個環節補起來，從被找到、到成交、到回頭再買。
           </p>
 
-          <div class="grid grid-cols-3 gap-0 mt-10 md:mt-12 border-y border-[var(--color-rule-hair)] py-6">
-            <div class="text-center sm:text-left sm:pl-0 px-2">
-              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">12</div>
-              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整篇章</div>
+          <dl class="grid grid-cols-3 gap-0 mt-8 md:mt-12
+                     border-y border-[var(--color-rule-hair)] py-5 md:py-6">
+            <div class="text-center sm:text-left sm:pl-0 px-1 sm:px-2">
+              <dt class="tabular-display text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">12</dt>
+              <dd class="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整篇章</dd>
             </div>
-            <div class="text-center px-2 sm:border-l border-[var(--color-rule-soft)]">
-              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">{totalReadMin}<span class="text-base font-normal ml-1 text-[var(--color-ink-muted)]">分</span></div>
-              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">總閱讀</div>
+            <div class="text-center px-1 sm:px-2 sm:border-l border-[var(--color-rule-soft)]">
+              <dt class="tabular-display text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] leading-none font-medium text-[var(--color-primary)] whitespace-nowrap">
+                {totalReadMin}<span class="text-[0.75em] font-normal ml-0.5 text-[var(--color-ink-muted)]">分</span>
+              </dt>
+              <dd class="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">總閱讀</dd>
             </div>
-            <div class="text-center sm:text-right px-2 sm:border-l border-[var(--color-rule-soft)]">
-              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">免費</div>
-              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整公開</div>
+            <div class="text-center sm:text-right px-1 sm:px-2 sm:border-l border-[var(--color-rule-soft)]">
+              <dt class="tabular-display text-[1.625rem] sm:text-[2rem] md:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">免費</dt>
+              <dd class="mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整公開</dd>
             </div>
-          </div>
+          </dl>
 
           <div class="flex flex-wrap gap-3 mt-10">
             <a href="/articles/exposure/"
