@@ -1,0 +1,34 @@
+---
+// 黑色 pill 浮動按鈕，固定 navbar 下方左側（z-index 高於 navbar）
+import { SITE } from "../consts";
+interface Props {
+  articleNum: string;
+}
+const { articleNum } = Astro.props;
+const href = `${SITE.overviewUrl}#article-${articleNum}`;
+---
+
+<a
+  href={href}
+  class="fixed top-[76px] left-4 z-[1100]
+         inline-flex items-center gap-2
+         px-4 py-2 pl-3
+         bg-[oklch(0.14_0.025_50/0.92)]
+         text-[var(--color-bg-card)]
+         border border-[oklch(0.76_0.12_75/0.45)]
+         rounded-full
+         text-[13px] font-semibold
+         shadow-lg backdrop-blur-md
+         hover:bg-gradient-to-br hover:from-[oklch(0.5_0.16_50)] hover:to-[oklch(0.52_0.12_72)]
+         hover:border-[oklch(0.84_0.14_85/0.7)]
+         hover:-translate-x-0.5
+         transition-all duration-200
+         max-md:top-[72px] max-md:px-3 max-md:py-1.5 max-md:text-xs"
+  aria-label="回到系列總覽"
+>
+  <span class="text-[15px] font-bold" aria-hidden="true">←</span>
+  <span>系列總覽</span>
+  <span class="opacity-55 text-[11px] font-medium pl-1.5 ml-0.5
+               border-l border-[oklch(0.76_0.12_75/0.3)]
+               max-md:hidden">12 篇導讀</span>
+</a>

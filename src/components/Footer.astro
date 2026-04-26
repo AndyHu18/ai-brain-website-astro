@@ -1,0 +1,16 @@
+---
+import { SITE } from "../consts";
+---
+<footer class="article-footer mt-12 py-10 border-t border-[var(--color-border-subtle)]
+               bg-[var(--color-bg-section)] text-center text-sm text-[var(--color-text-muted)]">
+  <div class="container-wide">
+    <div class="text-base font-black text-[var(--color-text-primary)] mb-2">
+      {SITE.name}<span class="text-[var(--color-primary)]">{SITE.brandSuffix}</span>
+    </div>
+    <p class="mb-4">{SITE.tagline}</p>
+    <p class="text-xs">
+      {SITE.copyright} ·
+      <a href={SITE.overviewUrl} class="text-[var(--color-primary)] hover:underline">系列總覽</a>
+    </p>
+  </div>
+</footer>

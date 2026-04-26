@@ -1,0 +1,41 @@
+---
+// 上下篇導航
+import { SERIES_ARTICLES } from "../consts";
+
+interface Props {
+  currentNum: string;
+}
+const { currentNum } = Astro.props;
+const idx = SERIES_ARTICLES.findIndex(a => a.num === currentNum);
+const prev = idx > 0 ? SERIES_ARTICLES[idx - 1] : null;
+const next = idx < SERIES_ARTICLES.length - 1 ? SERIES_ARTICLES[idx + 1] : null;
+---
+
+<nav class="article-pagination grid grid-cols-1 md:grid-cols-2 gap-3 mt-12 mb-8" aria-label="文章導航">
+  {prev ? (
+    <a
+      href={`/articles/${prev.slug}/`}
+      class="block p-5 rounded-2xl
+             bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)]
+             hover:border-[var(--color-primary)] hover:shadow-md
+             transition-all"
+    >
+      <span class="block text-xs text-[var(--color-text-muted)] mb-1">← 上一篇 · 第 {prev.num} 篇</span>
+      <span class="block text-base font-bold text-[var(--color-text-primary)]">{prev.shortTitle}</span>
+    </a>
+  ) : <div class="hidden md:block" />}
+
+  {next ? (
+    <a
+      href={`/articles/${next.slug}/`}
+      class="block p-5 rounded-2xl
+             bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)]
+             hover:border-[var(--color-primary)] hover:shadow-md
+             transition-all
+             md:text-right"
+    >
+      <span class="block text-xs text-[var(--color-text-muted)] mb-1">下一篇 · 第 {next.num} 篇 →</span>
+      <span class="block text-base font-bold text-[var(--color-text-primary)]">{next.shortTitle}</span>
+    </a>
+  ) : <div class="hidden md:block" />}
+</nav>

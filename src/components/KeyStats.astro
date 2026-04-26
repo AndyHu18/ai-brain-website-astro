@@ -1,0 +1,22 @@
+---
+interface Props {
+  stats: Array<{ num: string; label: string }>;
+}
+const { stats } = Astro.props;
+---
+
+<div class="key-stats grid grid-cols-1 sm:grid-cols-3 gap-0
+            border-y border-[var(--color-border-default)]
+            py-6 mt-8">
+  {stats.map((s, i) => (
+    <div class={`flex flex-col items-center text-center px-4 py-2
+                 ${i > 0 ? 'sm:border-l border-t sm:border-t-0 border-[var(--color-border-default)]' : ''}`}>
+      <span class="block text-2xl sm:text-3xl font-black text-[var(--color-primary)] mb-1">
+        {s.num}
+      </span>
+      <span class="block text-xs sm:text-sm text-[var(--color-text-muted)] leading-tight">
+        {s.label}
+      </span>
+    </div>
+  ))}
+</div>

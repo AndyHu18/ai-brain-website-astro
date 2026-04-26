@@ -1,0 +1,86 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* =============================================
+   DESIGN TOKENS — 跟原本 ai-brain-website 一致
+   ============================================= */
+@theme {
+  --color-bg-light: oklch(0.99 0.003 80);
+  --color-bg-section: oklch(0.95 0.02 78);
+  --color-bg-card: oklch(0.98 0.012 78);
+  --color-bg-warm-blush: oklch(0.98 0.01 72);
+
+  --color-tech-titanium: oklch(0.18 0.03 50);
+  --color-tech-midnight: oklch(0.13 0.025 50);
+
+  --color-primary: oklch(0.557 0.166 45);
+  --color-primary-light: oklch(0.6 0.17 46);
+  --color-primary-dark: oklch(0.5 0.15 43);
+  --color-accent: oklch(0.72 0.12 62);
+
+  --color-text-primary: oklch(0.12 0.02 50);
+  --color-text-secondary: oklch(0.18 0.025 50);
+  --color-text-muted: oklch(0.38 0.04 40);
+  --color-text-light: oklch(1 0.015 80);
+
+  --color-border-subtle: oklch(0.27 0.035 25 / 0.1);
+  --color-border-default: oklch(0.27 0.035 25 / 0.2);
+  --color-border-accent: oklch(0.557 0.166 45 / 0.3);
+
+  --font-serif: "Noto Serif TC", "Songti TC", serif;
+  --font-sans: "Noto Sans TC", -apple-system, sans-serif;
+
+  --spacing-container: 1200px;
+
+  --breakpoint-xs: 480px;
+}
+
+/* =============================================
+   BASE — Mobile-first
+   ============================================= */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-light);
+    -webkit-font-smoothing: antialiased;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-text-primary);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,54 @@
+---
+import { SITE } from "../consts";
+interface Props {
+  articleNum?: string; // 若在文章頁，顯示「網站經營 12 篇系列 #N」
+}
+const { articleNum } = Astro.props;
+const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SITE.overviewUrl;
+---
+
+<nav
+  class="fixed top-0 inset-x-0 z-[1000] flex items-center
+         h-16 px-4 md:px-6
+         bg-[oklch(0.99_0.003_80/0.97)] backdrop-blur-sm
+         border-b border-[var(--color-border-subtle)]"
+  role="navigation"
+  aria-label="主選單"
+>
+  <div class="container-wide flex items-center justify-between gap-3 w-full">
+    {/* 左：品牌（連回系列總覽） */}
+    <a
+      href={SITE.overviewUrl}
+      class="text-base font-black tracking-wide text-[var(--color-text-primary)]
+             whitespace-nowrap hover:text-[var(--color-primary)] transition-colors"
+      title="回到 12 篇系列總覽"
+    >
+      {SITE.name}<span class="text-[var(--color-primary)]">{SITE.brandSuffix}</span>
+    </a>
+
+    {/* 中：系列 label（手機隱藏） */}
+    <a
+      href={seriesHref}
+      class="hidden md:inline-flex items-center px-3 py-1
+             text-sm text-[var(--color-text-muted)]
+             bg-[var(--color-bg-section)]
+             border border-[var(--color-border-accent)] rounded-full
+             whitespace-nowrap hover:text-[var(--color-primary)] transition-colors"
+    >
+      {SITE.seriesName}
+    </a>
+
+    {/* 右：CTA */}
+    <a
+      href={SITE.ctaUrl}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-1.5 px-4 py-2.5 min-h-[44px]
+             text-sm font-bold text-white
+             bg-[var(--color-primary)] hover:bg-[var(--color-primary-light)]
+             rounded-full whitespace-nowrap transition-all"
+    >
+      {SITE.ctaLabel} →
+    </a>
+  </div>
+</nav>

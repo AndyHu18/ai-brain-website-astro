@@ -1,0 +1,31 @@
+---
+// hero 右側 Andy 大照片（mask 漸變、暖色光暈）
+// 手機版：隱藏（保留版面給文字）
+---
+<div class="hero-photo-wrap relative w-[460px] h-[580px] overflow-hidden self-end max-lg:hidden" aria-hidden="true">
+  <div class="hero-photo-glow absolute inset-[-20%] z-0 pointer-events-none"></div>
+  <img
+    src="/andy-photo.png"
+    alt=""
+    class="hero-photo-img relative z-10 w-full h-full object-cover object-top block"
+    loading="eager"
+  />
+</div>
+
+<style>
+  .hero-photo-glow {
+    background: radial-gradient(circle, oklch(0.557 0.166 45 / 0.3) 0%, transparent 60%);
+    filter: blur(40px);
+  }
+  .hero-photo-img {
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, black 5%, black 82%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 35%, black 100%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, black 5%, black 82%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 35%, black 100%);
+    -webkit-mask-composite: source-in;
+    filter: brightness(1.05) contrast(1.05);
+  }
+</style>

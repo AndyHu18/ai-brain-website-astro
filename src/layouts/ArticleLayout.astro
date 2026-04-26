@@ -1,0 +1,83 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import HeroPhoto from "../components/HeroPhoto.astro";
+import KeyStats from "../components/KeyStats.astro";
+import SidebarToc from "../components/SidebarToc.astro";
+import Pagination from "../components/Pagination.astro";
+import BackToOverview from "../components/BackToOverview.astro";
+
+interface Props {
+  num: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  description: string;
+  readTime: string;
+  stats: Array<{ num: string; label: string }>;
+  headings: Array<{ depth: number; slug: string; text: string }>;
+}
+const { num, title, subtitle, badge, description, readTime, stats, headings } = Astro.props;
+---
+<BaseLayout title={title} description={description} articleNum={num}>
+  <BackToOverview articleNum={num} />
+
+  {/* HERO 區塊 — 2 col grid（lg+）/ stack（mobile）*/}
+  <header class="article-hero relative overflow-hidden">
+    <div class="container-wide grid items-end gap-0 lg:grid-cols-[1fr_460px] py-10 lg:py-16">
+      <div class="hero-text min-w-0 lg:pb-8">
+        <a href="/系列總覽/" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)]">
+          ← 系列總覽 / 第 {num} 篇
+        </a>
+
+        <span class="inline-block mt-4 px-3 py-1 text-xs font-bold
+                     bg-[var(--color-primary)] text-white rounded-full">
+          {badge}
+        </span>
+
+        <h1 class="fluid-h1 mt-4 font-serif font-bold text-[var(--color-text-primary)]">
+          {title}
+        </h1>
+
+        <p class="fluid-body mt-4 text-[var(--color-text-secondary)]">
+          {subtitle}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-4 text-xs text-[var(--color-text-muted)]">
+          <span>第 {num} 篇</span>
+          <span aria-hidden="true">·</span>
+          <span>共 12 篇</span>
+          <span aria-hidden="true">·</span>
+          <span>閱讀約 {readTime}</span>
+        </div>
+
+        <KeyStats stats={stats} />
+      </div>
+
+      <HeroPhoto />
+    </div>
+  </header>
+
+  {/* 主內容 + Sidebar 2 col grid */}
+  <div class="container-wide grid gap-8 lg:grid-cols-[1fr_280px] py-10">
+    <article class="article-body min-w-0 prose prose-neutral max-w-none
+                    prose-headings:font-bold prose-headings:text-[var(--color-text-primary)]
+                    prose-h2:fluid-h2 prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-[var(--color-border-subtle)]
+                    prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+                    prose-p:my-4 prose-p:leading-relaxed
+                    prose-strong:text-[var(--color-text-primary)]
+                    prose-a:text-[var(--color-primary)] prose-a:no-underline hover:prose-a:underline
+                    prose-ul:my-4 prose-ol:my-4
+                    prose-blockquote:border-l-4 prose-blockquote:border-[var(--color-primary)]
+                    prose-blockquote:bg-[var(--color-bg-warm-blush)]
+                    prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:rounded-r
+                    prose-blockquote:not-italic">
+      <slot />
+    </article>
+
+    <SidebarToc headings={headings} currentNum={num} />
+  </div>
+
+  <div class="container-wide">
+    <Pagination currentNum={num} />
+  </div>
+</BaseLayout>

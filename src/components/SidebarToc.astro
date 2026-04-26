@@ -1,0 +1,90 @@
+---
+// 文章右側 sidebar：本文目錄 + 系列文章列表（高亮當前）
+import { SERIES_ARTICLES } from "../consts";
+
+interface Props {
+  headings: Array<{ depth: number; slug: string; text: string }>;
+  currentNum: string;
+}
+const { headings, currentNum } = Astro.props;
+
+// 只取 H2 當作 TOC items
+const tocItems = headings.filter(h => h.depth === 2);
+---
+
+<aside class="sidebar space-y-6 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto" aria-label="文章導覽">
+  {tocItems.length > 0 && (
+    <div class="sidebar-widget bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)] rounded-2xl p-5">
+      <h3 class="text-base font-black text-[var(--color-text-primary)] mb-3 pb-3
+                 border-b border-[var(--color-border-subtle)]">
+        本文目錄
+      </h3>
+      <ol class="space-y-2 text-sm">
+        {tocItems.map((item, idx) => (
+          <li>
+            <a
+              href={`#${item.slug}`}
+              class="toc-link block py-1.5 text-[var(--color-text-secondary)]
+                     hover:text-[var(--color-primary)] transition-colors"
+              data-toc-link={item.slug}
+            >
+              {idx + 1}. {item.text}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+
+  <div class="sidebar-widget bg-[var(--color-bg-card)] border border-[var(--color-border-subtle)] rounded-2xl p-5">
+    <h3 class="text-base font-black text-[var(--color-text-primary)] mb-3 pb-3
+               border-b border-[var(--color-border-subtle)]">
+      系列文章
+    </h3>
+    <ol class="space-y-1 text-sm">
+      {SERIES_ARTICLES.map(a => {
+        const isCurrent = a.num === currentNum;
+        return (
+          <li>
+            <a
+              href={`/articles/${a.slug}/`}
+              class={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors
+                      ${isCurrent
+                        ? 'bg-[var(--color-primary)] text-white font-semibold'
+                        : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-section)]'}`}
+              aria-current={isCurrent ? 'page' : undefined}
+            >
+              <span class={`inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full text-xs font-bold
+                            ${isCurrent
+                              ? 'bg-white/25'
+                              : 'bg-[var(--color-bg-section)] text-[var(--color-text-muted)]'}`}>
+                {a.num}
+              </span>
+              <span>{a.shortTitle}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ol>
+  </div>
+</aside>
+
+<script>
+  // TOC active state + smooth highlight
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.id;
+        if (!id) return;
+        const link = document.querySelector(`[data-toc-link="${id}"]`);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          document.querySelectorAll('[data-toc-link]').forEach(l => l.classList.remove('text-[var(--color-primary)]', 'font-semibold'));
+          link.classList.add('text-[var(--color-primary)]', 'font-semibold');
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px' }
+  );
+  document.querySelectorAll('article h2[id]').forEach(h => observer.observe(h));
+</script>
