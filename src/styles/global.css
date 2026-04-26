@@ -80,6 +80,13 @@
     scroll-behavior: smooth;
     /* 防止水平捲動跑出去 */
     overflow-x: hidden;
+    /* TOC 錨點跳轉時不被 sticky navbar 遮住 */
+    scroll-padding-top: calc(4rem + env(safe-area-inset-top) + 1rem);
+  }
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: calc(5rem + env(safe-area-inset-top) + 1rem);
+    }
   }
 
   body {
@@ -128,6 +135,14 @@
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  /* 移除 300ms tap delay（Mobile touch UX 最佳實踐）*/
+  a,
+  button,
+  label,
+  [role="button"] {
+    touch-action: manipulation;
   }
 
   /* 文字選取顏色 */
@@ -199,7 +214,7 @@
 @utility container-wide {
   max-width: var(--spacing-container);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: 1.5rem; /* 24px — 手機舒適下限（原 20px 偏緊）*/
   @media (min-width: 768px) {
     padding-inline: 2.5rem;
   }

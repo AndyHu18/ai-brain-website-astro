@@ -6,16 +6,16 @@ interface Props {
 const { stats } = Astro.props;
 ---
 
-<div class="key-stats reveal mt-12 md:mt-16 mb-4">
+<div class="key-stats reveal mt-8 md:mt-16 mb-4">
   {/* 上方 hairline + eyebrow */}
   <div class="flex items-center gap-3 mb-6">
     <span class="eyebrow eyebrow-primary">數據速覽</span>
     <hr class="rule-hairline flex-1" />
   </div>
 
-  <dl class="grid grid-cols-1 sm:grid-cols-3 gap-y-8 sm:gap-y-0 sm:gap-x-0">
+  <dl class="grid grid-cols-1 sm:grid-cols-3 gap-y-0 sm:gap-x-0">
     {stats.map((s, i) => (
-      <div class={`flex flex-col px-0 sm:px-6 py-1
+      <div class={`key-stats-item flex flex-col px-0 sm:px-6 py-1
                    ${i > 0 ? 'sm:border-l border-[var(--color-rule-soft)]' : ''}
                    ${i === 0 ? 'sm:pl-0' : ''}`}>
         <dt class="tabular-display text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] leading-none
@@ -32,3 +32,22 @@ const { stats } = Astro.props;
     ))}
   </dl>
 </div>
+
+<style>
+  /* 手機版：數據項目間加水平分隔線 */
+  @media (max-width: 639px) {
+    .key-stats-item {
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-rule-hair);
+    }
+    .key-stats-item:first-child {
+      padding-top: 0.25rem;
+    }
+    .key-stats-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0.25rem;
+    }
+    /* sm+ 的左側邊線顏色在手機上不顯示（靠上面的 sm: prefix 控制） */
+  }
+</style>

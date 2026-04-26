@@ -1,7 +1,7 @@
 ---
 import { SITE } from "../consts";
 ---
-<footer class="article-footer mt-24 pt-16 pb-12
+<footer class="article-footer mt-16 md:mt-24 pt-12 md:pt-16 pb-12
                bg-[var(--color-ink-midnight)]
                text-[var(--color-paper)]">
   <div class="container-wide">
@@ -23,16 +23,20 @@ import { SITE } from "../consts";
         <ul class="space-y-2">
           <li>
             <a href={SITE.overviewUrl}
-               class="text-[13px] text-[var(--color-paper)]/85
+               class="inline-flex items-center min-h-[44px]
+                      text-[13px] text-[var(--color-paper)]/85
                       hover:text-[var(--color-honey)]
+                      active:text-[var(--color-honey)]/70
                       transition-colors">
               網站經營 12 篇系列總覽
             </a>
           </li>
           <li>
             <a href={SITE.ctaUrl} target="_blank" rel="noopener"
-               class="text-[13px] text-[var(--color-paper)]/85
+               class="inline-flex items-center min-h-[44px]
+                      text-[13px] text-[var(--color-paper)]/85
                       hover:text-[var(--color-honey)]
+                      active:text-[var(--color-honey)]/70
                       transition-colors">
               加 LINE 免費診斷
             </a>

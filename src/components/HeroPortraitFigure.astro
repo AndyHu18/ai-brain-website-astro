@@ -48,10 +48,18 @@ const s = sizes[variant];
   .andy-portrait:hover .andy-portrait-img {
     transform: scale(1.012);
   }
+  /* 手機版：比原本縮小，確保首屏能看到標題文字 */
   @media (max-width: 1023px) {
     .andy-portrait-img {
-      width: min(260px, 72vw) !important;
-      height: min(334px, 92vw) !important;
+      width: min(240px, 65vw) !important;
+      height: min(300px, 78vw) !important;
+    }
+  }
+  /* 最窄（360px）：進一步限制，避免照片佔滿半螢幕 */
+  @media (max-width: 480px) {
+    .andy-portrait-img {
+      width: min(220px, 60vw) !important;
+      height: min(280px, 72vw) !important;
     }
   }
 </style>

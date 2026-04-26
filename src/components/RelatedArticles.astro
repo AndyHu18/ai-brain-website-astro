@@ -46,6 +46,7 @@ const enriched = sorted.map(a => ({
       <a
         href={`/articles/${a.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               active:bg-[var(--color-paper-deep)]
                p-5 md:p-6
                transition-colors duration-300"
       >
@@ -54,7 +55,7 @@ const enriched = sorted.map(a => ({
             第 {a.num} 篇
           </span>
           <hr class="rule-hairline flex-1" />
-          <span class="text-[10px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
+          <span class="text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
             {a.readTime}
           </span>
         </div>

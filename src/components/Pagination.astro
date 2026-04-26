@@ -39,6 +39,7 @@ const next = nextSeries ? {
       <a
         href={`/articles/${prev.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               active:bg-[var(--color-paper-deep)]
                p-5 md:p-7 lg:p-8
                transition-colors duration-300"
       >
@@ -68,6 +69,7 @@ const next = nextSeries ? {
       <a
         href={`/articles/${next.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               active:bg-[var(--color-paper-deep)]
                p-5 md:p-7 lg:p-8
                transition-colors duration-300
                md:text-right"
