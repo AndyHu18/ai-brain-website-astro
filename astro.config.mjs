@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  redirects: {
+    '/': '/系列總覽/',
+  },
   vite: {
     plugins: [tailwindcss()]
   }
