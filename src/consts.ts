@@ -9,8 +9,10 @@ export const SITE = {
   tagline: "把 AI 變成你 24 小時不下班的同事",
   seriesName: "網站經營 12 篇系列",
   overviewUrl: `${BASE_PATH}/系列總覽/`,
-  // 嵌入式環境的「來源頁」(使用者從 landing page v2 點進來,要能回 v2 而非回首頁)
-  mainSiteUrl: "https://ai-brain-website.vercel.app/landing-page-v2.html",
+  // 嵌入式環境的「來源頁」(從 landing page v2 點進來,要回 v2 並滾到原 CTA 區塊)
+  // #series-framework = v2 上「12 個環節 + 免費讀系列文章」CTA section 的 id
+  mainSiteUrl:
+    "https://ai-brain-website.vercel.app/landing-page-v2.html#series-framework",
   ctaUrl: "https://line.me/ti/p/5gW0er9baG",
   ctaLabel: "加 LINE 免費診斷",
   copyright: "© 2026 AI 智能大腦公司 · 企業級 AI 導入專家",
