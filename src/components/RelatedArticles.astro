@@ -1,0 +1,66 @@
+---
+// 「你可能感興趣」— 推薦 3 篇（排除當前 + 上下篇，剩餘隨機）
+import { SERIES_ARTICLES } from "../consts";
+
+interface Props {
+  currentNum: string;
+}
+const { currentNum } = Astro.props;
+const idx = SERIES_ARTICLES.findIndex(a => a.num === currentNum);
+
+// 排除當前 + 上下篇，從剩餘 9 篇選 3 篇
+const exclude = new Set([
+  currentNum,
+  SERIES_ARTICLES[idx - 1]?.num,
+  SERIES_ARTICLES[idx + 1]?.num,
+].filter(Boolean));
+
+const candidates = SERIES_ARTICLES.filter(a => !exclude.has(a.num));
+// 簡單選法：依距離當前文章遠近，取 3 篇
+const sorted = candidates
+  .map(a => ({ ...a, distance: Math.abs(parseInt(a.num) - parseInt(currentNum)) }))
+  .sort((a, b) => b.distance - a.distance) // 距離遠的放前面（topic 多樣性）
+  .slice(0, 3);
+---
+
+<section class="related-articles my-16 md:my-20" aria-label="你可能也有興趣">
+  <header class="flex items-center gap-3 mb-8">
+    <span class="eyebrow eyebrow-primary">你可能感興趣</span>
+    <hr class="rule-hairline flex-1" />
+  </header>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--color-rule-hair)]
+              border border-[var(--color-rule-hair)]">
+    {sorted.map(a => (
+      <a
+        href={`/articles/${a.slug}/`}
+        class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
+               p-5 md:p-6
+               transition-colors duration-300"
+      >
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="tabular-display text-[11px] tracking-[0.18em] text-[var(--color-primary)]">
+            第 {a.num} 篇
+          </span>
+          <hr class="rule-hairline flex-1" />
+          <span class="eyebrow text-[var(--color-ink-faint)]
+                       transition-transform duration-300 group-hover:translate-x-0.5">
+            →
+          </span>
+        </div>
+        <h3 class="font-display-cjk text-[1.0625rem] md:text-[1.125rem] font-bold leading-snug
+                   text-[var(--color-ink)] group-hover:text-[var(--color-primary)]
+                   transition-colors duration-300">
+          {a.shortTitle}
+        </h3>
+        <p class="mt-2 text-[12px] tracking-[0.05em] text-[var(--color-ink-faint)]">
+          {a.badge}
+        </p>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .font-display-cjk { font-family: var(--font-display-cjk); }
+</style>
