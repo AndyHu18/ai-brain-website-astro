@@ -42,18 +42,21 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
       </a>
     </div>
 
-    {/* 中：系列 label — 768px 以上才出現 */}
+    {/* 中：返回主站按鈕 — 768px 以上才出現（行動版用漢堡選單最上方的同連結） */}
     <a
-      href={seriesHref}
+      href={SITE.mainSiteUrl}
       class="hidden md:inline-flex items-center gap-2
-             px-3 py-1.5
-             eyebrow text-[var(--color-ink-muted)]
-             border border-[var(--color-rule-hair)] rounded-full
-             hover:border-[var(--color-rule-bold)] hover:text-[var(--color-primary)]
+             px-4 py-2
+             text-[12px] tracking-[0.1em] font-semibold
+             text-[var(--color-ink)]
+             border border-[var(--color-rule-bold)] rounded-full
+             hover:bg-[var(--color-primary)] hover:text-[var(--color-paper)] hover:border-[var(--color-primary)]
+             active:scale-[0.97]
              transition-all duration-300"
+      title="返回 AI 智能大腦主站"
     >
-      <span class="w-1 h-1 rounded-full bg-[var(--color-primary)]" aria-hidden="true"></span>
-      網站經營 12 篇系列
+      <span aria-hidden="true">←</span>
+      返回主站
     </a>
 
     {/* 右：漢堡 (mobile only) + CTA */}
