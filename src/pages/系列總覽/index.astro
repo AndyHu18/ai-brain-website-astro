@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroPortrait from "../../components/HeroPortrait.astro";
+import ScrollReveal from "../../components/ScrollReveal.astro";
+import { getCollection } from "astro:content";
+import { SERIES_ARTICLES, SITE } from "../../consts";
+
+const articles = await getCollection("articles", ({ data }) => !data.draft);
+const articlesBySlug = new Map(articles.map(a => [a.data.slug, a.data]));
+
+const list = SERIES_ARTICLES.map(a => {
+  const data = articlesBySlug.get(a.slug);
+  return {
+    ...a,
+    title: data?.title || a.shortTitle,
+    subtitle: data?.subtitle || "",
+    badge: data?.badge || a.badge,
+    readTime: data?.readTime || "8 分鐘",
+  };
+});
+
+const totalReadMin = list.reduce((sum, a) => {
+  const m = a.readTime.match(/\d+/);
+  return sum + (m ? parseInt(m[0]) : 0);
+}, 0);
+---
+<BaseLayout
+  title="網站經營 12 篇系列總覽"
+  description="12 篇實戰行銷系列，免費完整公開。從曝光、首頁設計到回頭客機制 — 找到你最薄弱的那一環，從那裡開始補。"
+>
+  <header class="series-hero relative overflow-hidden border-b border-[var(--color-rule-hair)]">
+    <div class="container-wide pt-12 pb-16 md:pt-20 md:pb-24">
+      <div class="grid items-end gap-12 lg:gap-16 lg:grid-cols-[1fr_480px]">
+
+        <div class="hero-text reveal min-w-0 max-w-[44rem]">
+
+          <div class="flex items-baseline gap-3 mb-8">
+            <span class="eyebrow eyebrow-primary">編輯式系列</span>
+            <span class="tabular-display text-sm tracking-[0.2em] text-[var(--color-ink-faint)]">
+              12 / 篇
+            </span>
+            <hr class="rule-hairline flex-1 ml-2" />
+          </div>
+
+          <h1 class="series-title font-display-cjk font-black text-[var(--color-ink)]
+                     mb-6 md:mb-8 text-wrap-balance">
+            <span class="block">你有網站，</span>
+            <span class="block">但它有在替你<em class="not-italic text-[var(--color-primary)]">賺錢</em>嗎？</span>
+          </h1>
+
+          <p class="body-lg text-[var(--color-ink-muted)] max-w-[40rem] font-light">
+            95% 的網站只是一張數位名片——看起來存在，實際上沒在賺錢。<br class="hidden md:inline" />
+            這 12 篇把每個環節補起來，從被找到、到成交、到回頭再買。
+          </p>
+
+          <div class="grid grid-cols-3 gap-0 mt-10 md:mt-12 border-y border-[var(--color-rule-hair)] py-6">
+            <div class="text-center sm:text-left sm:pl-0 px-2">
+              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">12</div>
+              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整篇章</div>
+            </div>
+            <div class="text-center px-2 sm:border-l border-[var(--color-rule-soft)]">
+              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">{totalReadMin}<span class="text-base font-normal ml-1 text-[var(--color-ink-muted)]">分</span></div>
+              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">總閱讀</div>
+            </div>
+            <div class="text-center sm:text-right px-2 sm:border-l border-[var(--color-rule-soft)]">
+              <div class="tabular-display text-[2rem] sm:text-[2.5rem] leading-none font-medium text-[var(--color-primary)]">免費</div>
+              <div class="mt-2 text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-muted)]">完整公開</div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-3 mt-10">
+            <a href="/articles/exposure/"
+               class="group inline-flex items-center gap-2 px-6 py-3.5
+                      bg-[var(--color-ink)] hover:bg-[var(--color-primary)]
+                      text-[var(--color-paper)] text-[14px] font-semibold
+                      rounded-full transition-all duration-300">
+              從第一篇開始
+              <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </a>
+            <a href="#articles"
+               class="inline-flex items-center gap-2 px-6 py-3.5
+                      border border-[var(--color-rule-bold)]
+                      text-[var(--color-ink)] hover:bg-[var(--color-paper-warm)]
+                      text-[14px] font-semibold
+                      rounded-full transition-all duration-300">
+              瀏覽全部篇章
+            </a>
+          </div>
+        </div>
+
+        <HeroPortrait />
+      </div>
+    </div>
+  </header>
+
+  <section class="container-wide py-16 md:py-24 max-w-[48rem]">
+    <p class="reveal font-display-cjk text-[1.5rem] md:text-[2rem] leading-[1.5] text-[var(--color-ink)]
+              text-wrap-balance">
+      這不是 12 篇獨立的文章，<span class="text-[var(--color-primary)]">是一套完整的系統</span>。
+    </p>
+    <p class="reveal mt-4 text-[var(--color-ink-muted)] text-[1.0625rem] leading-[1.85]">
+      找到你最薄弱的那一環，從那裡開始補。
+    </p>
+  </section>
+
+  <section id="articles" class="container-wide pb-24">
+    <header class="flex items-baseline gap-4 mb-10 md:mb-12">
+      <span class="eyebrow eyebrow-primary">12 篇深度文章</span>
+      <hr class="rule-hairline flex-1" />
+      <span class="text-[11px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
+        每篇 6–8 分鐘
+      </span>
+    </header>
+
+    <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px
+               bg-[var(--color-rule-hair)]
+               border border-[var(--color-rule-hair)]">
+      {list.map((a) => (
+        <li id={`article-${a.num}`} class="reveal">
+          <a href={`/articles/${a.slug}/`}
+             class="group block h-full bg-[var(--color-paper)]
+                    hover:bg-[var(--color-paper-blush)]
+                    p-6 md:p-7
+                    transition-colors duration-300">
+            <div class="flex items-baseline gap-3 mb-4">
+              <span class="tabular-display text-[12px] tracking-[0.18em] text-[var(--color-primary)]">
+                第 {a.num} 篇
+              </span>
+              <hr class="rule-hairline flex-1" />
+              <span class="text-[10px] tracking-[0.15em] uppercase text-[var(--color-ink-faint)]">
+                {a.readTime}
+              </span>
+            </div>
+
+            <span class="inline-block px-2.5 py-0.5 mb-4
+                         border border-[var(--color-rule-bold)]
+                         text-[10px] tracking-[0.18em] uppercase font-semibold
+                         text-[var(--color-primary)] rounded-full">
+              {a.badge}
+            </span>
+
+            <h3 class="font-display-cjk text-[1.0625rem] md:text-[1.125rem]
+                       font-bold leading-snug
+                       text-[var(--color-ink)]
+                       group-hover:text-[var(--color-primary)]
+                       transition-colors duration-300
+                       mb-3">
+              {a.title}
+            </h3>
+
+            {a.subtitle && (
+              <p class="text-[13px] leading-relaxed text-[var(--color-ink-muted)] line-clamp-2">
+                {a.subtitle}
+              </p>
+            )}
+
+            <div class="mt-5 inline-flex items-center gap-1.5 eyebrow text-[var(--color-ink-faint)]
+                        group-hover:text-[var(--color-primary)] transition-colors">
+              閱讀全文
+              <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bg-[var(--color-ink-midnight)] text-[var(--color-paper)]">
+    <div class="container-wide py-20 md:py-28 text-center">
+      <span class="eyebrow text-[var(--color-honey)]">讀完，然後呢？</span>
+      <h2 class="reveal mt-6 font-display-cjk font-bold
+                 text-[2rem] md:text-[2.75rem] leading-[1.3]
+                 max-w-[40rem] mx-auto text-wrap-balance">
+        免費讓我們看看<br />
+        你的網站漏了哪幾塊
+      </h2>
+      <p class="reveal mt-6 text-[15px] leading-relaxed
+                text-[var(--color-paper)]/70 max-w-[32rem] mx-auto">
+        30 分鐘免費診斷，找出你現在最大的 3 個問題，<br />
+        直接給你可以改的具體建議——不賣東西、不廢話。
+      </p>
+      <a href={SITE.ctaUrl} target="_blank" rel="noopener"
+         class="group inline-flex items-center gap-2 mt-10
+                px-8 py-4 bg-[var(--color-primary)] hover:bg-[var(--color-primary-light)]
+                text-[var(--color-paper)] text-[15px] font-semibold
+                rounded-full transition-all duration-300">
+        加 LINE 預約免費診斷
+        <span class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+      </a>
+    </div>
+  </section>
+
+  <ScrollReveal />
+</BaseLayout>
+
+<style>
+  .font-display-cjk { font-family: var(--font-display-cjk); }
+  .text-wrap-balance { text-wrap: balance; }
+  .series-title {
+    font-size: clamp(2.25rem, 4vw + 1rem, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

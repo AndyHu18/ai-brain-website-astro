@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,30..100&family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -7,10 +8,10 @@
    ============================================= */
 @theme {
   /* === 背景：cream / ivory，避免純白刺眼 === */
-  --color-paper: oklch(0.985 0.006 75);          /* 主背景 — 米白如紙 */
-  --color-paper-warm: oklch(0.97 0.012 72);      /* 區塊背景 — 暖一階 */
-  --color-paper-deep: oklch(0.94 0.018 70);      /* 卡片底色 */
-  --color-paper-blush: oklch(0.965 0.015 68);    /* highlight box / pull quote */
+  --color-paper: oklch(0.985 0.006 75); /* 主背景 — 米白如紙 */
+  --color-paper-warm: oklch(0.97 0.012 72); /* 區塊背景 — 暖一階 */
+  --color-paper-deep: oklch(0.94 0.018 70); /* 卡片底色 */
+  --color-paper-blush: oklch(0.965 0.015 68); /* highlight box / pull quote */
 
   /* === 深色（dark hero / footer 用）=== */
   --color-ink-titanium: oklch(0.18 0.03 50);
@@ -25,15 +26,15 @@
   --color-honey: oklch(0.72 0.12 62);
 
   /* === 文字 === */
-  --color-ink: oklch(0.16 0.025 50);             /* primary text — 暖近黑 */
-  --color-ink-muted: oklch(0.42 0.03 48);        /* 次要 — sepia gray */
-  --color-ink-faint: oklch(0.58 0.025 48);       /* meta info — 老照片色 */
-  --color-ink-light: oklch(0.99 0.005 80);       /* 反白文字 */
+  --color-ink: oklch(0.16 0.025 50); /* primary text — 暖近黑 */
+  --color-ink-muted: oklch(0.42 0.03 48); /* 次要 — sepia gray */
+  --color-ink-faint: oklch(0.58 0.025 48); /* meta info — 老照片色 */
+  --color-ink-light: oklch(0.99 0.005 80); /* 反白文字 */
 
   /* === 細線：低對比、暖色調，像書頁 === */
-  --color-rule-hair: oklch(0.5 0.05 45 / 0.12);    /* 1px hairline */
-  --color-rule-soft: oklch(0.5 0.06 45 / 0.18);    /* 2px refined */
-  --color-rule-bold: oklch(0.557 0.166 45 / 0.4);  /* primary @ 40% */
+  --color-rule-hair: oklch(0.5 0.05 45 / 0.12); /* 1px hairline */
+  --color-rule-soft: oklch(0.5 0.06 45 / 0.18); /* 2px refined */
+  --color-rule-bold: oklch(0.557 0.166 45 / 0.4); /* primary @ 40% */
 
   /* === 字型系統 === */
   /* 中文 display（大標）：Noto Serif TC 900，沉穩有重量 */
@@ -41,7 +42,8 @@
   /* Latin display（數字 / 英文標）：Fraunces — 變體、有 optical sizing */
   --font-display-latin: "Fraunces", "Noto Serif TC", Georgia, serif;
   /* 中文 body */
-  --font-body-cjk: "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
+  --font-body-cjk:
+    "Noto Sans TC", "Microsoft JhengHei", -apple-system, sans-serif;
   /* Latin UI / body：Inter */
   --font-ui: "Inter", "Noto Sans TC", -apple-system, sans-serif;
   /* 標籤、eyebrow、small caps */
@@ -49,21 +51,18 @@
 
   /* === 容器 === */
   --spacing-container: 1280px;
-  --spacing-prose: 36rem;        /* 編輯式單欄寬 ~ 65 中文字 */
+  --spacing-prose: 36rem; /* 編輯式單欄寬 ~ 65 中文字 */
 
   --breakpoint-xs: 480px;
 }
 
 /* =============================================
-   FONT IMPORTS — Fraunces (Latin display) + Inter (UI)
-   ============================================= */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,30..100&family=Inter:wght@300;400;500;600;700&display=swap");
-
-/* =============================================
    BASE
    ============================================= */
 @layer base {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -91,12 +90,19 @@
     /* 紙張紋理（極弱噪點，模擬印刷紙）*/
     background-image:
       radial-gradient(at 0% 0%, oklch(0.97 0.018 75 / 0.5) 0%, transparent 50%),
-      radial-gradient(at 100% 100%, oklch(0.97 0.018 65 / 0.4) 0%, transparent 50%);
+      radial-gradient(
+        at 100% 100%,
+        oklch(0.97 0.018 65 / 0.4) 0%,
+        transparent 50%
+      );
     background-attachment: fixed;
   }
 
   /* 標題系統 */
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display-cjk);
     color: var(--color-ink);
     font-weight: 700;
@@ -106,7 +112,9 @@
   }
 
   /* 中英文之間自動加空隙（更精緻）*/
-  body { text-spacing-trim: trim-start; }
+  body {
+    text-spacing-trim: trim-start;
+  }
 
   /* 連結基底 */
   a {
@@ -123,12 +131,16 @@
   /* Latin 數字用 tabular nums + Fraunces */
   .tabular-display {
     font-family: var(--font-display-latin);
-    font-feature-settings: "tnum" 1, "lnum" 1;
+    font-feature-settings:
+      "tnum" 1,
+      "lnum" 1;
     font-variant-numeric: tabular-nums;
   }
 
   /* Image / video defaults */
-  img, svg, video {
+  img,
+  svg,
+  video {
     max-width: 100%;
     height: auto;
     display: block;
@@ -144,21 +156,27 @@
   max-width: var(--spacing-container);
   margin-inline: auto;
   padding-inline: 1.25rem;
-  @media (min-width: 768px) { padding-inline: 2.5rem; }
-  @media (min-width: 1280px) { padding-inline: 3rem; }
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 3rem;
+  }
 }
 
 @utility container-prose {
   max-width: var(--spacing-prose);
   margin-inline: auto;
   padding-inline: 1.25rem;
-  @media (min-width: 768px) { padding-inline: 0; }
+  @media (min-width: 768px) {
+    padding-inline: 0;
+  }
 }
 
 /* Eyebrow（編輯式 small caps 標籤）*/
 @utility eyebrow {
   font-family: var(--font-ui);
-  font-size: 0.6875rem;        /* 11px */
+  font-size: 0.6875rem; /* 11px */
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -207,8 +225,9 @@
 @utility reveal {
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @utility revealed {
   opacity: 1;
