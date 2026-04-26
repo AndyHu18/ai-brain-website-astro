@@ -1,6 +1,6 @@
 ---
 // 「你可能感興趣」— 推薦 3 篇（排除當前 + 上下篇，剩餘從遠處取）
-import { SERIES_ARTICLES } from "../consts";
+import { SERIES_ARTICLES, BASE_PATH } from "../consts";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -44,7 +44,7 @@ const enriched = sorted.map(a => ({
               border border-[var(--color-rule-hair)]">
     {enriched.map(a => (
       <a
-        href={`/articles/${a.slug}/`}
+        href={`${BASE_PATH}/articles/${a.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
                active:bg-[var(--color-paper-deep)]
                p-5 md:p-6

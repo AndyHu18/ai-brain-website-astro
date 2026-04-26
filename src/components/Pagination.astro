@@ -1,5 +1,5 @@
 ---
-import { SERIES_ARTICLES } from "../consts";
+import { SERIES_ARTICLES, BASE_PATH } from "../consts";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -37,7 +37,7 @@ const next = nextSeries ? {
               border border-[var(--color-rule-hair)]">
     {prev ? (
       <a
-        href={`/articles/${prev.slug}/`}
+        href={`${BASE_PATH}/articles/${prev.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
                active:bg-[var(--color-paper-deep)]
                p-5 md:p-7 lg:p-8
@@ -67,7 +67,7 @@ const next = nextSeries ? {
 
     {next ? (
       <a
-        href={`/articles/${next.slug}/`}
+        href={`${BASE_PATH}/articles/${next.slug}/`}
         class="group block bg-[var(--color-paper)] hover:bg-[var(--color-paper-blush)]
                active:bg-[var(--color-paper-deep)]
                p-5 md:p-7 lg:p-8

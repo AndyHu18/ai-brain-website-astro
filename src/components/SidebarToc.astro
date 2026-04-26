@@ -1,5 +1,5 @@
 ---
-import { SERIES_ARTICLES } from "../consts";
+import { SERIES_ARTICLES, BASE_PATH } from "../consts";
 
 interface Props {
   headings: Array<{ depth: number; slug: string; text: string }>;
@@ -58,7 +58,7 @@ const tocItems = headings.filter(h => h.depth === 2);
         return (
           <li>
             <a
-              href={`/articles/${a.slug}/`}
+              href={`${BASE_PATH}/articles/${a.slug}/`}
               aria-current={isCurrent ? 'page' : undefined}
               class={`group flex items-baseline gap-3 py-2.5 px-3
                       border-b border-[var(--color-rule-hair)]

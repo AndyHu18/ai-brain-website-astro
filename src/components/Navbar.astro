@@ -1,5 +1,5 @@
 ---
-import { SITE, SERIES_ARTICLES } from "../consts";
+import { SITE, SERIES_ARTICLES, BASE_PATH } from "../consts";
 interface Props {
   articleNum?: string;
 }
@@ -183,7 +183,7 @@ const seriesHref = articleNum ? `${SITE.overviewUrl}#article-${articleNum}` : SI
     <nav aria-label="文章列表">
       {SERIES_ARTICLES.map(a => (
         <a
-          href={`/articles/${a.slug}/`}
+          href={`${BASE_PATH}/articles/${a.slug}/`}
           class={`nav-panel-link flex items-center gap-3 px-5 py-3.5
                   border-b border-[var(--color-rule-hair)]
                   hover:bg-[var(--color-paper-warm)]

@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  base: '/series',
   redirects: {
     '/': '/系列總覽/',
   },

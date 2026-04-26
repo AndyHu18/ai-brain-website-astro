@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroPortraitFigure from "../../components/HeroPortraitFigure.astro";
 import ScrollReveal from "../../components/ScrollReveal.astro";
 import { getCollection } from "astro:content";
-import { SERIES_ARTICLES, SITE } from "../../consts";
+import { SERIES_ARTICLES, SITE, BASE_PATH } from "../../consts";
 
 const articles = await getCollection("articles", ({ data }) => !data.draft);
 const articlesBySlug = new Map(articles.map(a => [a.data.slug, a.data]));
@@ -73,7 +73,7 @@ const totalReadMin = list.reduce((sum, a) => {
           </dl>
 
           <div class="flex flex-wrap gap-3 mt-10">
-            <a href="/articles/exposure/"
+            <a href={`${BASE_PATH}/articles/exposure/`}
                class="group inline-flex items-center gap-2 min-h-[44px] px-6 py-3
                       bg-[var(--color-ink)] hover:bg-[var(--color-primary)]
                       active:scale-[0.97]
@@ -123,7 +123,7 @@ const totalReadMin = list.reduce((sum, a) => {
                border border-[var(--color-rule-hair)]">
       {list.map((a) => (
         <li id={`article-${a.num}`} class="reveal">
-          <a href={`/articles/${a.slug}/`}
+          <a href={`${BASE_PATH}/articles/${a.slug}/`}
              class="group block h-full bg-[var(--color-paper)]
                     hover:bg-[var(--color-paper-blush)]
                     active:bg-[var(--color-paper-deep)]
