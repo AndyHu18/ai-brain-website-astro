@@ -10,8 +10,22 @@ import RelatedArticles from "../components/RelatedArticles.astro";
 import ReturnToOverview from "../components/ReturnToOverview.astro";
 import PodcastPlayer from "../components/PodcastPlayer.astro";
 
-// 暫時停用播放器,等 MiniMax 重新生成語音 + Suno 新 BGM 完成後恢復對照表
+// 暫時停用播放器 — 等 MiniMax 重新生成語音 + Suno 新 BGM 完成後,刪掉空 {} 並取消下方註解恢復
 const AUDIO_MAP: Record<string, string> = {};
+// const AUDIO_MAP: Record<string, string> = {
+//   "01": "/audio/ep01-exposure.mp3",
+//   "02": "/audio/ep02-homepage.mp3",
+//   "03": "/audio/ep03-pricing.mp3",
+//   "04": "/audio/ep04-google.mp3",
+//   "05": "/audio/ep05-content.mp3",
+//   "06": "/audio/ep06-seo.mp3",
+//   "07": "/audio/ep07-automation.mp3",
+//   "08": "/audio/ep08-upsell.mp3",
+//   "09": "/audio/ep09-retention.mp3",
+//   "10": "/audio/ep10-referral.mp3",
+//   "11": "/audio/ep11-trust.mp3",
+//   "12": "/audio/ep12-integration.mp3",
+// };
 
 const IMAGE_MAP: Record<string, string> = {
   "01": "/images/articles/01-exposure-infographic.jpg",

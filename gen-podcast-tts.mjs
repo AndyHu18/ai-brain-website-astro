@@ -3,7 +3,7 @@ import path from "path";
 import https from "https";
 import { execSync } from "child_process";
 
-const API_KEY = "AIzaSyCb1I2NLVxaup1FIC6byGwRFt4bieTHt0w";
+const API_KEY = process.env.GEMINI_API_KEY || "";
 const SCRIPTS_DIR = "./audio-scripts";
 const OUTPUT_DIR = "./public/audio";
 const BGM_PATH = "./public/audio/bgm.mp3";

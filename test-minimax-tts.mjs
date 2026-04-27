@@ -3,8 +3,8 @@ import path from "path";
 import { execSync } from "child_process";
 import os from "os";
 
-const API_KEY  = "sk-api-IRJgbtSMhj0UWwQyha-7JDcmfX2iVDHuW3orQPIvSDLY57PnFVPPO-7zWrW4j6eCeMKBz1YHXctvM99k5uFvQ3mDOvvSdpiNUdiY-GTVoBu4KG1Tpy7aA8w";
-const GROUP_ID = process.env.MINIMAX_GROUP_ID || "";   // 從環境變數帶入
+const API_KEY  = process.env.MINIMAX_API_KEY || "";
+const GROUP_ID = process.env.MINIMAX_GROUP_ID || "";
 const OUTPUT_DIR = "./public/audio/test";
 
 const TEST_DIALOGUE = [
