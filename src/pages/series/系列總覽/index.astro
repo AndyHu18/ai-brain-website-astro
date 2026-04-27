@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import HeroPortraitFigure from "../../../components/HeroPortraitFigure.astro";
 import ScrollReveal from "../../../components/ScrollReveal.astro";
+import PodcastPlayer from "../../../components/PodcastPlayer.astro";
 import { getCollection } from "astro:content";
 import { SERIES_ARTICLES, SITE, BASE_PATH } from "../../../consts";
 
@@ -91,6 +92,14 @@ const totalReadMin = list.reduce((sum, a) => {
                       rounded-full transition-all duration-300">
               瀏覽全部篇章
             </a>
+          </div>
+
+          <div class="mt-10 max-w-[38rem]">
+            <PodcastPlayer
+              src="/audio/ep00-series.mp3"
+              title="你的網站，是業務員還是廣告看板？"
+              episode="EP.00 · 系列導讀"
+            />
           </div>
         </div>
 

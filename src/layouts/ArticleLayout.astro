@@ -8,6 +8,25 @@ import ReadingProgress from "../components/ReadingProgress.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
 import RelatedArticles from "../components/RelatedArticles.astro";
 import ReturnToOverview from "../components/ReturnToOverview.astro";
+import PodcastPlayer from "../components/PodcastPlayer.astro";
+
+// 暫時停用播放器,等 MiniMax 重新生成語音 + Suno 新 BGM 完成後恢復對照表
+const AUDIO_MAP: Record<string, string> = {};
+
+const IMAGE_MAP: Record<string, string> = {
+  "01": "/images/articles/01-exposure-infographic.jpg",
+  "02": "/images/articles/02-homepage-infographic.jpg",
+  "03": "/images/articles/03-seo-infographic.jpg",
+  "04": "/images/articles/04-google-infographic.jpg",
+  "05": "/images/articles/05-content-infographic.jpg",
+  "06": "/images/articles/06-social-infographic.jpg",
+  "07": "/images/articles/07-automation-infographic.jpg",
+  "08": "/images/articles/08-upsell-infographic.jpg",
+  "09": "/images/articles/09-retention-infographic.jpg",
+  "10": "/images/articles/10-referral-infographic.jpg",
+  "11": "/images/articles/11-trust-infographic.jpg",
+  "12": "/images/articles/12-integration-infographic.jpg",
+};
 
 interface Props {
   num: string;
@@ -20,6 +39,8 @@ interface Props {
   headings: Array<{ depth: number; slug: string; text: string }>;
 }
 const { num, title, subtitle, badge, description, readTime, stats, headings } = Astro.props;
+const audioSrc = AUDIO_MAP[num];
+const imageSrc = IMAGE_MAP[num];
 ---
 <BaseLayout title={title} description={description} articleNum={num}>
   <ReadingProgress />
@@ -84,6 +105,23 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
       id="article-top"
       class="article-body min-w-0 max-w-none lg:max-w-[42rem]"
     >
+      {audioSrc && (
+        <PodcastPlayer
+          src={audioSrc}
+          title={title}
+          episode={`EP.${num} · ${badge}`}
+        />
+      )}
+      {imageSrc && (
+        <figure class="article-infographic reveal">
+          <img
+            src={imageSrc}
+            alt={`${title} — 重點摘要圖`}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      )}
       <slot />
     </article>
 
@@ -270,6 +308,20 @@ const { num, title, subtitle, badge, description, readTime, stats, headings } = 
     border-radius: 4px;
     font-size: 0.9em;
     color: var(--color-primary-deep);
+  }
+
+  /* Infographic figure */
+  .article-infographic {
+    margin: 2rem 0 2.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-rule-hair);
+    background: var(--color-paper-warm);
+  }
+  .article-infographic img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   /* Hero text fade-in */
